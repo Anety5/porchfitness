@@ -127,6 +127,57 @@
   <!-- Main Content -->
   <main id="main-content" class="max-w-7xl mx-auto px-6 py-20">
 
+    <!-- Personalized Plan Section (Google Gemini AI) -->
+    <section class="bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-3xl p-10 mb-16 shadow-2xl" role="region" aria-label="Personalized plan generator">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+          🤖 Get Your Personalized Exercise Plan
+        </h2>
+        <p class="text-2xl md:text-3xl mb-8 text-white/95 font-semibold">
+          Powered by Google Gemini AI
+        </p>
+        
+        <div id="personalizedForm">
+          <div class="grid sm:grid-cols-2 gap-6 mb-8">
+            <div class="text-left">
+              <label class="block text-xl md:text-2xl font-bold mb-3">Your Age</label>
+              <input type="number" id="userAge" placeholder="e.g. 65" min="18" max="120"
+                     class="w-full px-6 py-4 rounded-xl text-gray-900 font-semibold text-xl">
+            </div>
+            <div class="text-left">
+              <label class="block text-xl md:text-2xl font-bold mb-3">Mobility Level</label>
+              <select id="userMobility" class="w-full px-6 py-4 rounded-xl text-gray-900 font-semibold text-xl">
+                <option value="">Select...</option>
+                <option value="limited">Limited (seated only)</option>
+                <option value="moderate">Moderate (seated + some standing)</option>
+                <option value="good">Good (all exercises)</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="mb-8 text-left">
+            <label class="block text-xl md:text-2xl font-bold mb-3">Your Goals</label>
+            <textarea id="userGoals" rows="3" placeholder="e.g. Improve balance, reduce hip pain, increase flexibility..."
+                      class="w-full px-6 py-4 rounded-xl text-gray-900 font-semibold text-xl"></textarea>
+          </div>
+          
+          <button onclick="generatePersonalizedPlan()"
+                  class="bg-white text-teal-700 btn hover:bg-teal-50 transition-all shadow-2xl text-2xl w-full sm:w-auto">
+            ✨ Generate My Custom Plan
+          </button>
+        </div>
+        
+        <div id="personalizedResults" class="hidden mt-10 bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-left">
+          <h3 class="text-3xl md:text-4xl font-bold mb-6 text-center">Your Personalized Routine</h3>
+          <div id="resultsContent" class="text-xl md:text-2xl text-white/95 space-y-4 leading-relaxed"></div>
+          <button onclick="speakPlan()"
+                  class="mt-8 w-full bg-white text-teal-700 btn hover:bg-teal-50 transition-all shadow-xl text-2xl">
+            🎤 Have AI Coach Guide Me Through This Plan
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- Instructions -->
     <div class="bg-yellow-50 border-4 border-yellow-400 rounded-2xl p-8 mb-16" role="region" aria-label="How to use instructions">
       <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 flex items-center gap-3">
@@ -498,6 +549,10 @@
 
   <!-- JavaScript -->
   <script>
+    // Configuration - IMPORTANT: Replace with your actual Gemini API key
+    const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'; // Get from: https://aistudio.google.com/app/apikey
+    let currentPlan = '';
+
     function openCoachChat(question) {
       console.log('User wants to learn:', question);
       alert('👋 Great choice! Click the AI Coach button (bottom right corner) and ask:\n\n"' + question + '"\n\nThe coach will guide you through the exercise step-by-step!');
@@ -510,13 +565,93 @@
       });
     }
 
+    async function generatePersonalizedPlan() {
+      const age = document.getElementById('userAge').value;
+      const mobility = document.getElementById('userMobility').value;
+      const goals = document.getElementById('userGoals').value;
+
+      if (!age || !mobility || !goals) {
+        alert('Please fill out all fields to generate your personalized plan.');
+        return;
+      }
+
+      if (GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
+        alert('⚠️ Gemini API key not configured. Please add your API key to the code or set up environment variables.');
+        return;
+      }
+
+      const resultsDiv = document.getElementById('personalizedResults');
+      const resultsContent = document.getElementById('resultsContent');
+      resultsContent.innerHTML = '<p class="text-center text-2xl">🤖 Generating your personalized plan...</p>';
+      resultsDiv.classList.remove('hidden');
+
+      const prompt = `You are a senior fitness coach. Create a personalized exercise plan based on:
+- Age: ${age}
+- Mobility level: ${mobility}
+- Goals: ${goals}
+
+Available Exercises:
+1. Hamstring Stretch - Seated, leg flexibility
+2. Sit to Stands - Seated, leg strength
+3. Cat-Cow Stretch - Seated, back mobility
+4. Arm Raises - Seated, shoulder strength
+5. Ankle Circles - Seated, ankle mobility
+6. Side Bends - Seated, core flexibility
+7. Spinal Twist - Seated, spine mobility
+8. Figure 4 Stretch - Seated, deep hip opener
+9. Shoulder Rolls - Seated, tension relief
+10. Neck Stretches - Seated, neck mobility
+11. Calf Raises - Standing, ankle strength
+12. Warrior I - Standing, hip flexors
+
+Create a personalized routine with:
+- 5-7 exercises that best match their goals and mobility level
+- Brief explanation why each exercise was chosen
+- Recommended duration/reps for each
+- Safety tips specific to their profile
+- Encouraging tone
+
+Format as a clear, numbered list with exercise names in bold.`;
+
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{ text: prompt }]
+            }]
+          })
+        });
+
+        const data = await response.json();
+        
+        if (data.candidates && data.candidates[0].content) {
+          currentPlan = data.candidates[0].content.parts[0].text;
+          resultsContent.innerHTML = `<div class="prose prose-invert max-w-none">${currentPlan.replace(/\n/g, '<br>')}</div>`;
+        } else {
+          throw new Error('Invalid response from Gemini API');
+        }
+      } catch (error) {
+        console.error('Gemini API Error:', error);
+        resultsContent.innerHTML = `
+          <p class="text-red-200 text-xl">⚠️ Unable to generate plan at this time. Please try again later.</p>
+          <p class="text-sm mt-2 text-white/70">Error: ${error.message}</p>
+        `;
+      }
+    }
+
+    function speakPlan() {
+      alert('🎤 Click the AI Coach button in the bottom right corner and say:\n\n"Can you guide me through my personalized exercise plan?"\n\nThen describe the exercises from your plan above, and the AI coach will provide step-by-step voice coaching!');
+    }
+
     // Announce page loaded for screen readers
     window.addEventListener('load', () => {
       const announcement = document.createElement('div');
       announcement.setAttribute('role', 'status');
       announcement.setAttribute('aria-live', 'polite');
       announcement.className = 'sr-only';
-      announcement.textContent = 'PorchFitness loaded. 14 exercises available. Use tab key to navigate.';
+      announcement.textContent = 'PorchFitness loaded. 13 exercises available. Use tab key to navigate.';
       document.body.appendChild(announcement);
     });
   </script>
