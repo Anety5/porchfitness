@@ -1,26 +1,26 @@
-# 🏡 PorchFitness - ElevenLabs Accelerate Challenge
+# PorchFitness - ElevenLabs Accelerate Challenge
 
 **Voice-Powered Chair Exercises for Seniors**
 
 ---
 
-## 🎯 Project Overview
+## Project Overview
 
 PorchFitness is a voice-first web application that guides older adults through gentle chair exercises using ElevenLabs Conversational AI. No app downloads, no complicated interfaces—just a warm, encouraging voice coach accessible from any device.
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-- 🎤 **Voice-First Design** - Natural conversation with AI coach
-- 🪑 **14 Gentle Exercises** - 11 seated, 3 standing (with support)
-- 🛡️ **Safety-First** - Built-in medical guardrails and reminders
-- 📱 **Accessible Anywhere** - No app download required
-- 🌍 **Free to Use** - No subscription barriers
+- **Voice-First Design** - Natural conversation with AI coach
+- **14 Gentle Exercises** - 11 seated, 3 standing (with support)
+- **Safety-First** - Built-in medical guardrails and reminders
+- **Accessible Anywhere** - No app download required
+- **Free to Use** - No subscription barriers
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 1. Visit the website
 2. Click any exercise card
@@ -29,7 +29,7 @@ PorchFitness is a voice-first web application that guides older adults through g
 
 ---
 
-## 📋 Exercise List
+## Exercise List
 
 ### Seated (1-11)
 1. Seated Piriformis Stretch (Modified)
@@ -51,16 +51,16 @@ PorchFitness is a voice-first web application that guides older adults through g
 
 ---
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 - **Frontend:** HTML, CSS (Tailwind), JavaScript
 - **AI:** ElevenLabs Conversational AI
-- **Hosting:** Vercel/Netlify
-- **Domain:** porchfitness.com
+- **Hosting:** Firebase
+- **PWA:** Progressive Web App with offline support
 
 ---
 
-## 🎯 Challenge Category
+## Challenge Category
 
 **ElevenLabs Accelerate Hackathon**
 - Category: Accessibility / Healthcare / Voice-First
@@ -69,4 +69,10 @@ PorchFitness is a voice-first web application that guides older adults through g
 
 ---
 
-**Built with ❤️ for seniors who deserve safe, accessible fitness coaching**
+## License
+
+MIT License - See LICENSE file for details
+
+---
+
+Built for seniors who deserve safe, accessible fitness coaching

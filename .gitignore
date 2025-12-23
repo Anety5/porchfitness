@@ -5,9 +5,14 @@
 # Dependencies
 node_modules/
 
-# Environment
+# Environment & Secrets
 .env
 .env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+config.local.js
 
 # System
 .DS_Store
@@ -22,3 +27,14 @@ npm-debug.log*
 .idea/
 *.swp
 *.swo
+
+# Documentation (keep private)
+CHECKPOINT*.md
+CHAT*.md
+STATUS*.md
+SETUP*.md
+ELEVENLABS*.md
+FIREBASE*.md
+PROGRESS*.md
+SIMPLIFIED*.md
+QUICK*.md
