@@ -86,6 +86,27 @@
         border-width: 5px;
       }
     }
+    
+    /* ElevenLabs Widget - Make it larger and more readable */
+    elevenlabs-convai {
+      --avatar-width: 120px !important;
+      --avatar-height: 120px !important;
+      --chat-width: 450px !important;
+      --chat-max-height: 650px !important;
+      --font-size: 18px !important;
+      --message-font-size: 18px !important;
+      --input-font-size: 18px !important;
+    }
+    
+    /* Make widget bubble larger on mobile */
+    @media (max-width: 640px) {
+      elevenlabs-convai {
+        --avatar-width: 100px !important;
+        --avatar-height: 100px !important;
+        --chat-width: 95vw !important;
+        --font-size: 16px !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-gray-50">
@@ -654,7 +675,41 @@
 
     function openCoachChat(question) {
       console.log('User wants to learn:', question);
-      alert('👋 Great choice! Click the AI Coach button (bottom right corner) and ask:\n\n"' + question + '"\n\nThe coach will guide you through the exercise step-by-step!');
+      
+      // Get the ElevenLabs widget
+      const widget = document.querySelector('elevenlabs-convai');
+      
+      if (widget) {
+        // Try to open the widget by clicking it
+        try {
+          // If widget is not already open, click to open it
+          const shadowRoot = widget.shadowRoot;
+          if (shadowRoot) {
+            const button = shadowRoot.querySelector('button') || shadowRoot.querySelector('[role="button"]');
+            if (button) {
+              button.click();
+              console.log('✅ Opened ElevenLabs widget');
+            }
+          } else {
+            // Fallback: click the widget element itself
+            widget.click();
+          }
+          
+          // Store the question for the widget to use
+          window.pendingQuestion = question;
+          
+          // Show brief instruction
+          setTimeout(() => {
+            alert('🎤 Coach is ready! The exercise question has been prepared. Start speaking or click the microphone to begin.');
+          }, 500);
+          
+        } catch (error) {
+          console.error('Error opening widget:', error);
+          alert('👋 Click the AI Coach button (bottom right) and ask:\n\n"' + question + '"');
+        }
+      } else {
+        alert('👋 Click the AI Coach button (bottom right) and ask:\n\n"' + question + '"');
+      }
     }
 
     function scrollToExercises() {
@@ -760,7 +815,7 @@
     
     // Initialize Firebase
     const firebaseConfig = {
-      apiKey: "YOUR_FIREBASE_API_KEY",
+      apiKey: "AIzaSyC9zzKfkpYgo2Kwsxt1acyjsgtBYCI_WBs",
       authDomain: "porchfitness-98628.firebaseapp.com",
       projectId: "porchfitness-98628",
       storageBucket: "porchfitness-98628.firebasestorage.app",
