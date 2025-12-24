@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Progress - PorchFitness</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  
+  <style>
+    body { font-size: 18px; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-900 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between flex-wrap gap-4">
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="flex items-center gap-4">
+          <img src="/images/icon-192.png" alt="PorchFitness Logo" class="w-16 h-16 rounded-lg">
+          <div>
+            <h1 class="text-3xl md:text-4xl font-bold">My Progress</h1>
+            <p class="text-base text-blue-200">Track Your Fitness Journey</p>
+          </div>
+        </a>
+      </div>
+      <div class="flex items-center gap-4 flex-wrap">
+        <button id="authButton" class="bg-white text-gray-700 px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 transition">
+          Sign In
+        </button>
+        <a href="index.html" class="bg-blue-700 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-600 transition">
+          ← Back to Exercises
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+            <a href="index.html" class="text-3xl font-bold text-blue-600">🪑 PorchFitness</a>
+            <div class="flex gap-4">
+                <a href="index.html" class="text-xl text-gray-600 hover:text-blue-600">Home</a>
+                <a href="weekly-summary.html" class="bg-purple-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-purple-700 transition">
+                    📊 Weekly Summary
+                </a>
+            </div>
+        </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-12">
+
+    <!-- Welcome Section -->
+    <div id="welcomeSection" class="bg-white rounded-xl shadow-lg p-8 mb-8">
+      <h2 class="text-4xl font-bold text-gray-900 mb-2">Welcome back!</h2>
+      <p class="text-2xl text-gray-600">Loading your progress...</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-gray-600 text-lg font-medium">Total Workouts</span>
+          <span class="text-4xl">💪</span>
+        </div>
+        <p id="totalWorkouts" class="text-5xl font-bold text-blue-600">0</p>
+        <p class="text-base text-gray-500 mt-1">All time</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-gray-600 text-lg font-medium">This Week</span>
+          <span class="text-4xl">📅</span>
+        </div>
+        <p id="weekWorkouts" class="text-5xl font-bold text-green-600">0</p>
+        <p class="text-base text-gray-500 mt-1">Keep it up!</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-gray-600 text-lg font-medium">Avg Pain Level</span>
+          <span class="text-4xl">❤️</span>
+        </div>
+        <p id="avgPain" class="text-5xl font-bold text-purple-600">-</p>
+        <p class="text-base text-gray-500 mt-1">Lower is better</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-gray-600 text-lg font-medium">Total Minutes</span>
+          <span class="text-4xl">⏱️</span>
+        </div>
+        <p id="totalMinutes" class="text-5xl font-bold text-orange-600">0</p>
+        <p class="text-base text-gray-500 mt-1">Time exercising</p>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <!-- Workout Frequency Chart -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h3 class="text-3xl font-bold text-gray-900 mb-4">📈 Workout Frequency</h3>
+        <p class="text-xl text-gray-600 mb-6">Last 30 days</p>
+        <canvas id="workoutChart"></canvas>
+      </div>
+
+      <!-- Pain Level Trend -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h3 class="text-3xl font-bold text-gray-900 mb-4">💚 Pain Level Trend</h3>
+        <p class="text-xl text-gray-600 mb-6">Lower is better!</p>
+        <canvas id="painChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Exercise Breakdown -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h3 class="text-3xl font-bold text-gray-900 mb-4">🎯 Most Popular Exercises</h3>
+      <canvas id="exerciseChart"></canvas>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <h3 class="text-3xl font-bold text-gray-900 mb-4">📝 Recent Activity</h3>
+      <div id="recentActivity" class="space-y-4">
+        <p class="text-xl text-gray-500">Loading...</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <img src="/images/icon-192.png" alt="PorchFitness Logo" class="w-16 h-16 rounded-lg">
+          <div>
+            <h3 class="text-2xl font-bold">🪑 PorchFitness</h3>
+            <p class="text-base text-blue-200">LavaRock Labs</p>
+          </div>
+        </div>
+        <div class="text-center md:text-right">
+          <p class="text-lg text-blue-200">aloha@lavarocklabs.com</p>
+          <p class="text-base text-blue-300 mt-1">© 2025 PorchFitness • All Rights Reserved</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script>
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(window.firebaseConfig || {
+        apiKey: "AIzaSyDPBZLp3KrdKhJEt-MtqHbCZ8Tj6IiRDYs",
+        authDomain: "porchfitness.firebaseapp.com",
+        projectId: "porchfitness",
+        storageBucket: "porchfitness.firebasestorage.app",
+        messagingSenderId: "1069868108544",
+        appId: "1:1069868108544:web:d05a9d5e3c6b7f8g9h0i1j"
+      });
+    }
+
+    let workoutChart, painChart, exerciseChart;
+
+    // Auth button handler
+    const authButton = document.getElementById('authButton');
+    
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        // User is signed in
+        if (user.isAnonymous) {
+          authButton.textContent = 'Sign In with Google';
+          authButton.onclick = async () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            try {
+              await firebase.auth().signInWithPopup(provider);
+            } catch (error) {
+              console.error('Sign in error:', error);
+            }
+          };
+        } else {
+          authButton.textContent = `👋 ${user.displayName || user.email}`;
+          authButton.onclick = async () => {
+            if (confirm('Sign out?')) {
+              await firebase.auth().signOut();
+              await firebase.auth().signInAnonymously();
+            }
+          };
+        }
+        await loadProgressData(user.uid);
+      } else {
+        // Sign in anonymously
+        authButton.textContent = 'Sign In with Google';
+        await firebase.auth().signInAnonymously();
+      }
+    });
+
+    async function loadProgressData(userId) {
+      try {
+        const db = firebase.firestore();
+        
+        // Get all sessions
+        const allSessions = await db.collection('users')
+          .doc(userId)
+          .collection('sessions')
+          .orderBy('date', 'desc')
+          .limit(100)
+          .get();
+
+        if (allSessions.empty) {
+          document.getElementById('welcomeSection').innerHTML = `
+            <h2 class="text-4xl font-bold text-gray-900 mb-2">Start Your Journey!</h2>
+            <p class="text-2xl text-gray-600">Complete your first workout to see your progress here.</p>
+            <a href="index.html" class="inline-block mt-4 bg-blue-600 text-white px-8 py-4 rounded-full text-xl font-bold hover:bg-blue-700 transition">
+              Get Started →
+            </a>
+          `;
+          return;
+        }
+
+        const sessions = [];
+        allSessions.forEach(doc => {
+          const data = doc.data();
+          sessions.push({
+            exercise: data.exerciseName,
+            painLevel: data.painLevel || 0,
+            notes: data.notes || '',
+            reps: data.repsCompleted || 0,
+            duration: data.durationSeconds || 0,
+            date: data.date.toDate()
+          });
+        });
+
+        // Calculate stats
+        const totalWorkouts = sessions.length;
+        const weekSessions = sessions.filter(s => {
+          const weekAgo = new Date();
+          weekAgo.setDate(weekAgo.getDate() - 7);
+          return s.date >= weekAgo;
+        });
+        const weekWorkouts = weekSessions.length;
+        const avgPain = (sessions.reduce((sum, s) => sum + s.painLevel, 0) / totalWorkouts).toFixed(1);
+        const totalMinutes = Math.round(sessions.reduce((sum, s) => sum + s.duration, 0) / 60);
+
+        // Update stats
+        document.getElementById('totalWorkouts').textContent = totalWorkouts;
+        document.getElementById('weekWorkouts').textContent = weekWorkouts;
+        document.getElementById('avgPain').textContent = avgPain;
+        document.getElementById('totalMinutes').textContent = totalMinutes;
+
+        // Update welcome
+        document.getElementById('welcomeSection').innerHTML = `
+          <h2 class="text-4xl font-bold text-gray-900 mb-2">Great progress! 🎉</h2>
+          <p class="text-2xl text-gray-600">You've completed <strong>${totalWorkouts}</strong> workouts. Keep it up!</p>
+        `;
+
+        // Create charts
+        createWorkoutChart(sessions);
+        createPainChart(sessions);
+        createExerciseChart(sessions);
+        displayRecentActivity(sessions.slice(0, 10));
+
+      } catch (error) {
+        console.error('Error loading progress:', error);
+      }
+    }
+
+    function createWorkoutChart(sessions) {
+      const last30Days = {};
+      const today = new Date();
+      
+      // Initialize last 30 days
+      for (let i = 29; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        last30Days[dateStr] = 0;
+      }
+
+      // Count workouts per day
+      sessions.forEach(s => {
+        const dateStr = s.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        if (dateStr in last30Days) {
+          last30Days[dateStr]++;
+        }
+      });
+
+      const ctx = document.getElementById('workoutChart');
+      workoutChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: Object.keys(last30Days),
+          datasets: [{
+            label: 'Workouts',
+            data: Object.values(last30Days),
+            borderColor: '#2563eb',
+            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: { beginAtZero: true, ticks: { stepSize: 1 } }
+          }
+        }
+      });
+    }
+
+    function createPainChart(sessions) {
+      // Group by week and calculate avg pain
+      const weeks = {};
+      sessions.forEach(s => {
+        const weekStart = new Date(s.date);
+        weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+        const weekStr = weekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        
+        if (!weeks[weekStr]) {
+          weeks[weekStr] = { total: 0, count: 0 };
+        }
+        weeks[weekStr].total += s.painLevel;
+        weeks[weekStr].count++;
+      });
+
+      const labels = Object.keys(weeks).reverse().slice(0, 8).reverse();
+      const avgPains = labels.map(week => (weeks[week].total / weeks[week].count).toFixed(1));
+
+      const ctx = document.getElementById('painChart');
+      painChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Avg Pain Level',
+            data: avgPains,
+            backgroundColor: avgPains.map(p => 
+              p <= 2 ? '#10b981' : p <= 4 ? '#f59e0b' : '#ef4444'
+            )
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: { beginAtZero: true, max: 10 }
+          }
+        }
+      });
+    }
+
+    function createExerciseChart(sessions) {
+      const exerciseCounts = {};
+      sessions.forEach(s => {
+        exerciseCounts[s.exercise] = (exerciseCounts[s.exercise] || 0) + 1;
+      });
+
+      const sorted = Object.entries(exerciseCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8);
+
+      const ctx = document.getElementById('exerciseChart');
+      exerciseChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: sorted.map(e => e[0]),
+          datasets: [{
+            data: sorted.map(e => e[1]),
+            backgroundColor: [
+              '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
+              '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'right' }
+          }
+        }
+      });
+    }
+
+    function displayRecentActivity(sessions) {
+      const html = sessions.map(s => `
+        <div class="border-l-4 border-blue-500 pl-4 py-3">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="font-bold text-xl text-gray-900">${s.exercise}</p>
+              <p class="text-lg text-gray-600">${s.date.toLocaleString()}</p>
+              ${s.notes ? `<p class="text-lg text-gray-700 mt-1">${s.notes}</p>` : ''}
+            </div>
+            <div class="text-right">
+              <span class="inline-block px-4 py-2 rounded-full text-lg font-semibold ${
+                s.painLevel <= 2 ? 'bg-green-100 text-green-800' :
+                s.painLevel <= 4 ? 'bg-yellow-100 text-yellow-800' :
+                'bg-red-100 text-red-800'
+              }">
+                Pain: ${s.painLevel}/10
+              </span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('recentActivity').innerHTML = html;
+    }
+  </script>
+
+</body>
+</html>

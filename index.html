@@ -43,7 +43,22 @@
     .exercise-card {
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       border: 3px solid #e5e7eb;
-      min-height: 280px;
+      min-height: 320px;
+    }
+    .exercise-card img {
+      object-fit: contain !important;
+    }
+    .exercise-card h3 {
+      font-size: 1.5rem !important; /* 24px */
+      font-weight: 700 !important;
+    }
+    .exercise-card p {
+      font-size: 1.125rem !important; /* 18px */
+    }
+    .exercise-card button {
+      font-size: 1.125rem !important; /* 18px */
+      padding: 1rem 1.5rem !important;
+      font-weight: 600 !important;
     }
     .exercise-card:hover, .exercise-card:focus {
       transform: scale(1.05);
@@ -89,16 +104,43 @@
 
   <!-- Header -->
   <header class="bg-blue-900 text-white shadow-lg sticky top-0 z-40" role="banner">
-    <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between flex-wrap gap-4">
       <div class="flex items-center gap-4">
-        <span class="text-5xl" role="img" aria-label="House icon">🏡</span>
+        <img src="/images/icon-192.png" alt="PorchFitness Logo" class="w-16 h-16 rounded-lg">
         <div>
           <h1 class="text-3xl md:text-4xl font-bold">PorchFitness</h1>
-          <p class="text-lg md:text-xl text-blue-100">Voice-Coached Chair Exercises</p>
+          <p class="text-lg md:text-xl text-blue-100">Voice-Coached Gentle Exercises</p>
+          <p class="text-base text-blue-200">Built for Anyone • Great for Seniors</p>
         </div>
       </div>
+      <button id="googleSignInBtn" class="bg-white text-gray-700 px-8 py-3 rounded-full font-semibold text-lg hover:bg-gray-100 transition shadow-lg flex items-center gap-3">
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Sign In
+      </button>
     </div>
   </header>
+
+  <!-- Navigation Bar -->
+  <nav class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="flex justify-between items-center flex-wrap gap-4">
+            <div class="text-3xl font-bold text-blue-600">🪑 PorchFitness</div>
+            <div class="flex gap-4 flex-wrap">
+                <a href="progress.html" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700 transition">
+                    📈 View My Progress
+                </a>
+                <a href="weekly-summary.html" class="bg-purple-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-purple-700 transition">
+                    📊 Weekly Summary
+                </a>
+            </div>
+        </div>
+    </div>
+  </nav>
 
   <!-- Hero Section -->
   <section class="bg-blue-800 text-white py-16 px-6" role="region" aria-label="Welcome section">
@@ -123,106 +165,115 @@
       <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
         Choose an Exercise
       </h2>
-      <p class="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+      <p class="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed mb-6">
         Click or tap any card below. Your AI coach will guide you through each movement with clear, spoken instructions.
       </p>
+      
+      <!-- Email Stats Button -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <button id="emailStatsBtn" onclick="sendWeeklyEmail()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg transition inline-flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+          </svg>
+          📊 Email My Weekly Stats
+        </button>
+        <a href="progress.html" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg transition inline-flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+          </svg>
+          📈 View My Progress
+        </a>
+      </div>
     </section>
 
     <!-- Exercise Grid - Larger cards for better visibility -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16" role="list" aria-label="Exercise list">
 
       <!-- Exercise 2: Seated Hamstring Stretch -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer focus:ring-4 focus:ring-blue-500"
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6"
                role="listitem"
                tabindex="0"
-               onclick="openCoachChat('How do I do the seated hamstring stretch?')"
-               onkeypress="if(event.key==='Enter'){openCoachChat('How do I do the seated hamstring stretch?')}"
-               aria-label="Seated Hamstring Stretch for legs. Click to get voice coaching">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
+               aria-label="Seated Hamstring Stretch for legs">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-hamstring-stretch.jpg"
                alt="Seated Hamstring Stretch"
                class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">
             🦵
           </div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
+        <h3 class="font-bold text-gray-900 mb-2">
           Hamstring Stretch
         </h3>
-        <p class="text-xs text-gray-500">Seated • Legs</p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
+        <p class="text-gray-600 mb-3">Seated • Legs • Flexibility</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          Sit on chair edge, extend one leg straight, gently reach toward toes. Hold 20-30 seconds each side.
+        </p>
+        <button onclick="startExerciseCoaching('Hamstring Stretch', 'Let me guide you through the hamstring stretch.')" class="mt-2 w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition shadow-md">
+          🎤 Get Voice Coaching
         </button>
-        <button onclick="event.stopPropagation(); logWorkout('Seated Hamstring Stretch')" class="mt-2 w-full bg-green-50 text-green-600 py-2 rounded-lg text-xs font-semibold hover:bg-green-100 transition">
+        <button onclick="event.stopPropagation(); logWorkout('Seated Hamstring Stretch')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 3: Sit to Stands -->
-      <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
-           onclick="openCoachChat('How do I do sit to stands?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
-          <img src="images/sit-to-stands.jpg"
-               alt="Sit to Stands"
-               class="w-full h-full object-cover rounded-lg"
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
+          <img src="images/sit-to-stands.jpg" alt="Sit to Stands" class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
-            💪
-          </div>
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">💪</div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
-          Sit to Stands
-        </h3>
-        <p class="text-xs text-gray-500">Seated • Strength</p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
+        <h3 class="font-bold text-gray-900 mb-2">Sit to Stands</h3>
+        <p class="text-gray-600 mb-3">Seated • Strength</p>
+        <p class="text-gray-700 mb-4">Stand up from chair without using hands. Builds leg strength.</p>
+        <button onclick="startExerciseCoaching('Sit to Stands')" class="mt-2 w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
+          🎤 Get Voice Coaching
         </button>
-        <button onclick="event.stopPropagation(); logWorkout('Sit to Stands')" class="mt-2 w-full bg-green-50 text-green-600 py-2 rounded-lg text-xs font-semibold hover:bg-green-100 transition">
+        <button onclick="event.stopPropagation(); logWorkout('Sit to Stands')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 4: Seated Cat-Cow -->
-      <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
-           onclick="openCoachChat('How do I do seated cat-cow stretch?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
-          <img src="images/seated-cat-cow.jpg"
-               alt="Seated Cat-Cow"
-               class="w-full h-full object-cover rounded-lg"
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
+          <img src="images/seated-cat-cow.jpg" alt="Seated Cat-Cow" class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
-            🐱
-          </div>
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">🐱</div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
-          Cat-Cow Stretch
-        </h3>
-        <p class="text-xs text-gray-500">Seated • Back</p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
+        <h3 class="font-bold text-gray-900 mb-2">Cat-Cow Stretch</h3>
+        <p class="text-gray-600 mb-3">Seated • Back</p>
+        <p class="text-gray-700 mb-4">Gentle spinal mobility. Arch and round your back slowly.</p>
+        <button onclick="startExerciseCoaching('Cat-Cow Stretch')" class="mt-2 w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition">
+          🎤 Get Voice Coaching
         </button>
-        <button onclick="event.stopPropagation(); logWorkout('Seated Cat-Cow')" class="mt-2 w-full bg-green-50 text-green-600 py-2 rounded-lg text-xs font-semibold hover:bg-green-100 transition">
+        <button onclick="event.stopPropagation(); logWorkout('Seated Cat-Cow')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 5: Seated Arm Raises -->
       <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
            onclick="openCoachChat('How do I do seated arm raises?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-arm-raises.jpg"
                alt="Seated Arm Raises"
                class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">
             🙌
           </div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
+        <h3 class="font-bold text-gray-900 mb-2">
           Arm Raises
         </h3>
-        <p class="text-xs text-gray-500">Seated • Shoulders</p>
+        <p class="text-gray-600 mb-3">Seated • Shoulders</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          Sit up straight, raise arms to side to shoulder height, lower back down. Repeat 10-15 times.
+        </p>
         <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
           🎤 Get Coaching
         </button>
@@ -234,19 +285,22 @@
       <!-- Exercise 6: Seated Ankle Circles -->
       <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
            onclick="openCoachChat('How do I do seated ankle circles?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-ankle-circles.jpg"
                alt="Seated Ankle Circles"
                class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">
             🦶
           </div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
+        <h3 class="font-bold text-gray-900 mb-2">
           Ankle Circles
         </h3>
-        <p class="text-xs text-gray-500">Seated • Ankles</p>
+        <p class="text-gray-600 mb-3">Seated • Ankles</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          Sit up straight, lift one foot, and draw circles in the air with your toes. Switch directions halfway.
+        </p>
         <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
           🎤 Get Coaching
         </button>
@@ -258,19 +312,22 @@
       <!-- Exercise 7: Seated Side Bends -->
       <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
            onclick="openCoachChat('How do I do seated side bends?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-side-bends.jpg"
                alt="Seated Side Bends"
                class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">
             🤸
           </div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
+        <h3 class="font-bold text-gray-900 mb-2">
           Side Bends
         </h3>
-        <p class="text-xs text-gray-500">Seated • Core</p>
+        <p class="text-gray-600 mb-3">Seated • Core</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          Sit up straight, reach one arm overhead and lean to the opposite side. Hold onto the chair with the other hand.
+        </p>
         <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
           🎤 Get Coaching
         </button>
@@ -282,19 +339,22 @@
       <!-- Exercise 8: Seated Spinal Twist -->
       <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
            onclick="openCoachChat('How do I do seated spinal twist?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-spinal-twist.jpg"
                alt="Seated Spinal Twist"
                class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">
             🔄
           </div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
+        <h3 class="font-bold text-gray-900 mb-2">
           Spinal Twist
         </h3>
-        <p class="text-xs text-gray-500">Seated • Spine</p>
+        <p class="text-gray-600 mb-3">Seated • Spine</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          Sit up straight, place one hand on the back of the chair, twist your torso and look over your shoulder.
+        </p>
         <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
           🎤 Get Coaching
         </button>
@@ -306,19 +366,22 @@
       <!-- Exercise 9: Figure 4 Stretch -->
       <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
            onclick="openCoachChat('How do I do figure 4 stretch?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/figure-4-stretch.jpg"
                alt="Figure 4 Stretch"
                class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">
             4️⃣
           </div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
+        <h3 class="font-bold text-gray-900 mb-2">
           Figure 4 Stretch
         </h3>
-        <p class="text-xs text-gray-500">Seated • Hip Opener</p>
+        <p class="text-gray-600 mb-3">Seated • Hip Opener</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          Sit on the edge of the chair, cross one ankle over the opposite knee, and gently press down on the raised knee.
+        </p>
         <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
           🎤 Get Coaching
         </button>
@@ -330,19 +393,22 @@
       <!-- Exercise 10: Seated Shoulder Rolls -->
       <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
            onclick="openCoachChat('How do I do seated shoulder rolls?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-shoulder-rolls.jpg"
                alt="Seated Shoulder Rolls"
                class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">
             🔄
           </div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
+        <h3 class="font-bold text-gray-900 mb-2">
           Shoulder Rolls
         </h3>
-        <p class="text-xs text-gray-500">Seated • Shoulders</p>
+        <p class="text-gray-600 mb-3">Seated • Shoulders</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          Sit up straight, roll your shoulders up, back, and down in a circular motion. Repeat 10 times, then reverse.
+        </p>
         <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
           🎤 Get Coaching
         </button>
@@ -354,19 +420,22 @@
       <!-- Exercise 11: Seated Neck Stretches -->
       <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
            onclick="openCoachChat('How do I do seated neck stretches?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-neck-stretches.jpg"
                alt="Seated Neck Stretches"
                class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">
             💆
           </div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
+        <h3 class="font-bold text-gray-900 mb-2">
           Neck Stretches
         </h3>
-        <p class="text-xs text-gray-500">Seated • Neck</p>
+        <p class="text-gray-600 mb-3">Seated • Neck</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          Sit up straight, slowly tilt your head toward one shoulder, hold, and then switch to the other side.
+        </p>
         <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
           🎤 Get Coaching
         </button>
@@ -378,19 +447,22 @@
       <!-- Exercise 12: Standing Calf Raises -->
       <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
            onclick="openCoachChat('How do I do standing calf raises?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/standing-calf-raises.jpg"
                alt="Standing Calf Raises"
                class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">
             🦿
           </div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
+        <h3 class="font-bold text-gray-900 mb-2">
           Calf Raises
         </h3>
-        <p class="text-xs text-gray-500">Standing • Legs</p>
+        <p class="text-gray-600 mb-3">Standing • Legs</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          Stand up straight, hold onto the back of the chair, and raise your heels off the ground. Lower back down.
+        </p>
         <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
           🎤 Get Coaching
         </button>
@@ -402,19 +474,22 @@
       <!-- Exercise 13: Warrior I / Hip Flexor Stretch -->
       <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
            onclick="openCoachChat('How do I do warrior one hip flexor stretch?')">
-        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 h-40 flex items-center justify-center">
+        <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/warrior-1-hip-flexor.jpg"
                alt="Warrior I Hip Flexor Stretch"
                class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div style="display:none;" class="w-full h-full flex items-center justify-center text-4xl">
+          <div style="display:none;" class="w-full h-full flex items-center justify-center text-6xl">
             🧘
           </div>
         </div>
-        <h3 class="font-bold text-gray-900 text-sm sm:text-base mb-1">
+        <h3 class="font-bold text-gray-900 mb-2">
           Warrior I
         </h3>
-        <p class="text-xs text-gray-500">Standing • Hip Flexors</p>
+        <p class="text-gray-600 mb-3">Standing • Hip Flexors</p>
+        <p class="text-gray-700 mb-4 leading-relaxed">
+          Stand with legs wide, turn one foot out, bend that knee, and stretch the other leg straight. Reach arms overhead.
+        </p>
         <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
           🎤 Get Coaching
         </button>
@@ -461,110 +536,23 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-8 mt-16">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p class="text-gray-400 mb-2">
-        🏡 PorchFitness
-      </p>
-      <p class="text-gray-600 text-xs mt-4">
-        © 2025 PorchFitness • All Rights Reserved
-      </p>
-    </div>
-  </footer>
-
-  <!-- ElevenLabs Conversational AI Widget -->
-  <!-- Agent: Samantha (Porch Fitness Coach) -->
-  <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
-  <elevenlabs-convai agent-id="agent_5201kd2291x0ffysp0e4z7c57ksr"></elevenlabs-convai>
-
-  <!-- PWA Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then((registration) => {
-            console.log('ServiceWorker registered:', registration.scope);
-          })
-          .catch((error) => {
-            console.log('ServiceWorker registration failed:', error);
-          });
-      });
-    }
-  </script>
-
-  <!-- JavaScript -->
-  <script>
-    // Firebase Configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyC1g3a0qVaB9xQS8eiXAKrOpOgKz2Xz2tg",
-      authDomain: "porchfitness-98628.firebaseapp.com",
-      projectId: "porchfitness-98628",
-      storageBucket: "porchfitness-98628.firebasestorage.app",
-      messagingSenderId: "441846637533",
-      appId: "1:441846637533:web:37b9a18e7bf2f25e20e88c"
-    };
-    firebase.initializeApp(firebaseConfig);
-    
-    // Sign in anonymously for simple logging
-    firebase.auth().signInAnonymously().catch((error) => {
-      console.error('Auth error:', error);
-    });
-    
-    const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE';
-    let currentPlan = '';
-    let currentExerciseName = '';
-
-    function openCoachChat(question) {
-      console.log('User wants to learn:', question);
-      alert('👋 Click the AI Coach button in the bottom right corner to start your guided exercise session!');
-    }
-
-    // Workout Logging Functions
-    function logWorkout(exerciseName) {
-      currentExerciseName = exerciseName;
-      document.getElementById('logExerciseName').textContent = exerciseName;
-      document.getElementById('painLevel').value = 0;
-      document.getElementById('painValue').textContent = '0';
-      document.getElementById('workoutNotes').value = '';
-      document.getElementById('logWorkoutModal').classList.remove('hidden');
-    }
-
-    function closeLogWorkoutModal() {
-      document.getElementById('logWorkoutModal').classList.add('hidden');
-    }
-
-    async function saveWorkoutLog() {
-      const user = firebase.auth().currentUser;
-      if (!user) {
-        alert('Please wait a moment for authentication to complete.');
-        return;
-      }
-
-      const painLevel = parseInt(document.getElementById('painLevel').value);
-      const notes = document.getElementById('workoutNotes').value.trim();
-
-      try {
-        await firebase.firestore()
-          .collection('users')
-          .doc(user.uid)
-          .collection('sessions')
-          .add({
-            exerciseName: currentExerciseName,
-            painLevel: painLevel,
-            notes: notes,
-            repsCompleted: 0,
-            durationSeconds: 0,
-            date: firebase.firestore.FieldValue.serverTimestamp()
-          });
-
-        closeLogWorkoutModal();
-        alert('✅ Workout logged successfully!');
-      } catch (error) {
-        console.error('Error saving workout log:', error);
-        alert('Error saving workout. Please try again.');
-      }
-    }
-  </script>
-
-</body>
-</html>
+  <footer class="bg-blue-900 text-white mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <img src="/images/icon-192.png" alt="PorchFitness Logo" class="w-16 h-16 rounded-lg">
+          <div>
+            <h3 class="text-2xl font-bold">🪑 PorchFitness</h3>
+            <p class="text-base text-blue-200">LavaRock Labs</p>
+          </div>
+        </div>
+        <div class="text-center md:text-right">
+          <p class="text-lg text-blue-200">
+            <a href="mailto:aloha@lavarocklabs.com" class="hover:underline">aloha@lavarocklabs.com</a>
+          </p>
+          <p class="text-base text-blue-300 mt-1">© 2025 PorchFitness • All Rights Reserved</p>
+          <p class="text-sm text-blue-300 mt-2">
+            <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+          </p>
+        </div>
+      </div
