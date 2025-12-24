@@ -302,6 +302,127 @@ ${workoutList}
     },
 );
 
+// Cloud Function for Samantha to get weekly stats
+exports.getWeeklySummary = onRequest(
+    {
+      cors: "*",
+    },
+    async (req, res) => {
+      if (req.method !== "POST") {
+        res.status(405).json({error: "Method not allowed"});
+        return;
+      }
+
+      try {
+        const {userId} = req.body;
+
+        if (!userId) {
+          res.status(400).json({error: "Missing userId"});
+          return;
+        }
+
+        // Get last 7 days of workout sessions
+        const db = admin.firestore();
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+        const sessionsSnapshot = await db
+            .collection("users")
+            .doc(userId)
+            .collection("sessions")
+            .where(
+                "date",
+                ">=",
+                admin.firestore.Timestamp.fromDate(sevenDaysAgo),
+            )
+            .orderBy("date", "desc")
+            .get();
+
+        if (sessionsSnapshot.empty) {
+          res.status(200).json({
+            success: true,
+            totalWorkouts: 0,
+            avgPainLevel: 0,
+            totalMinutes: 0,
+            streak: 0,
+            mostFrequentExercise: "None yet",
+            message: "No workouts this week. Let's get started!",
+          });
+          return;
+        }
+
+        // Calculate stats
+        let totalPain = 0;
+        let totalDuration = 0;
+        const exercises = {};
+        const dates = new Set();
+
+        sessionsSnapshot.forEach((doc) => {
+          const data = doc.data();
+          totalPain += data.painLevel || 0;
+          totalDuration += data.durationSeconds || 0;
+
+          // Count exercise frequency
+          const exercise = data.exerciseName;
+          exercises[exercise] = (exercises[exercise] || 0) + 1;
+
+          // Track unique dates
+          const dateStr = data.date.toDate().toLocaleDateString();
+          dates.add(dateStr);
+        });
+
+        const totalWorkouts = sessionsSnapshot.size;
+        const avgPain = (totalPain / totalWorkouts).toFixed(1);
+        const totalMinutes = Math.round(totalDuration / 60);
+
+        // Find most frequent exercise
+        let mostFrequent = "Various exercises";
+        let maxCount = 0;
+        for (const [exercise, count] of Object.entries(exercises)) {
+          if (count > maxCount) {
+            maxCount = count;
+            mostFrequent = exercise;
+          }
+        }
+
+        // Calculate streak (consecutive days)
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        let streak = 0;
+        const checkDate = new Date(today);
+
+        while (streak < 30) { // Max 30 day check
+          const dateStr = checkDate.toLocaleDateString();
+          if (dates.has(dateStr)) {
+            streak++;
+            checkDate.setDate(checkDate.getDate() - 1);
+          } else if (streak > 0) {
+            break; // Streak broken
+          } else {
+            checkDate.setDate(checkDate.getDate() - 1);
+          }
+        }
+
+        res.status(200).json({
+          success: true,
+          totalWorkouts,
+          avgPainLevel: parseFloat(avgPain),
+          totalMinutes,
+          streak,
+          mostFrequentExercise: mostFrequent,
+          uniqueDaysWorkedOut: dates.size,
+          message: `Great progress! ${totalWorkouts} workouts this week.`,
+        });
+      } catch (error) {
+        console.error("Error getting weekly summary:", error);
+        res.status(500).json({
+          error: "Failed to get weekly summary",
+          details: error.message,
+        });
+      }
+    },
+);
+
 // Cloud Function to send weekly summary email to user
 exports.sendWeeklySummaryEmail = onRequest(
     {
