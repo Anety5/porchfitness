@@ -139,6 +139,67 @@ Keep it friendly, concise, and encouraging in the user's language.`;
     },
 );
 
+// Cloud Function to log a workout from Samantha
+exports.logWorkout = onRequest(
+    {
+      cors: "*",
+    },
+    async (req, res) => {
+      if (req.method !== "POST") {
+        res.status(405).json({error: "Method not allowed"});
+        return;
+      }
+
+      try {
+        const {userId, exerciseName, painLevel, notes, repsCompleted, durationSeconds} = req.body;
+
+        if (!userId || !exerciseName || painLevel === undefined) {
+          res.status(400).json({
+            error: "Missing required fields: userId, exerciseName, and painLevel are required",
+          });
+          return;
+        }
+
+        // Validate painLevel is between 0-10
+        if (painLevel < 0 || painLevel > 10) {
+          res.status(400).json({
+            error: "painLevel must be between 0 and 10",
+          });
+          return;
+        }
+
+        const db = admin.firestore();
+
+        // Create new workout session
+        const sessionData = {
+          exerciseName: exerciseName,
+          painLevel: parseInt(painLevel),
+          notes: notes || "",
+          repsCompleted: repsCompleted ? parseInt(repsCompleted) : 0,
+          durationSeconds: durationSeconds ? parseInt(durationSeconds) : 0,
+          date: admin.firestore.FieldValue.serverTimestamp(),
+        };
+
+        await db
+            .collection("users")
+            .doc(userId)
+            .collection("sessions")
+            .add(sessionData);
+
+        res.status(200).json({
+          success: true,
+          message: `Great job! Logged ${exerciseName} workout with pain level ${painLevel}/10.`,
+        });
+      } catch (error) {
+        console.error("Error logging workout:", error);
+        res.status(500).json({
+          error: "Failed to log workout",
+          details: error.message,
+        });
+      }
+    },
+);
+
 // Cloud Function to generate weekly progress summary
 exports.getWeeklySummary = onRequest(
     {

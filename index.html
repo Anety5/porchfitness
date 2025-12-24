@@ -160,32 +160,6 @@
   <!-- Main Content -->
   <main id="main-content" class="max-w-7xl mx-auto px-6 py-16" role="main">
 
-    <!-- Exercise Section Header -->
-    <section class="mb-12 text-center" role="region" aria-label="Exercise selection">
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-        Choose an Exercise
-      </h2>
-      <p class="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed mb-6">
-        Click or tap any card below. Your AI coach will guide you through each movement with clear, spoken instructions.
-      </p>
-      
-      <!-- Progress Tracking Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a href="weekly-summary.html" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg transition inline-flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-          </svg>
-          📊 Weekly Summary
-        </a>
-        <a href="progress.html" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg transition inline-flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-          </svg>
-          📈 View My Progress
-        </a>
-      </div>
-    </section>
-
     <!-- Exercise Grid - Larger cards for better visibility -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16" role="list" aria-label="Exercise list">
 
@@ -266,7 +240,7 @@
         <button onclick="event.stopPropagation(); logWorkout('Seated Arm Raises')" class="mt-2 w-full bg-green-50 text-green-600 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 6: Seated Ankle Circles -->
       <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
@@ -287,17 +261,13 @@
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, lift one foot, and draw circles in the air with your toes. Switch directions halfway.
         </p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
-        </button>
         <button onclick="event.stopPropagation(); logWorkout('Seated Ankle Circles')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 7: Seated Side Bends -->
-      <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
-           onclick="openCoachChat('How do I do seated side bends?')">
+      <article class="exercise-card bg-white rounded-xl shadow-lg p-4">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-side-bends.jpg"
                alt="Seated Side Bends"
@@ -314,17 +284,13 @@
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, reach one arm overhead and lean to the opposite side. Hold onto the chair with the other hand.
         </p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
-        </button>
         <button onclick="event.stopPropagation(); logWorkout('Seated Side Bends')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 8: Seated Spinal Twist -->
-      <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
-           onclick="openCoachChat('How do I do seated spinal twist?')">
+      <article class="exercise-card bg-white rounded-xl shadow-lg p-4">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-spinal-twist.jpg"
                alt="Seated Spinal Twist"
@@ -341,17 +307,13 @@
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, place one hand on the back of the chair, twist your torso and look over your shoulder.
         </p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
-        </button>
         <button onclick="event.stopPropagation(); logWorkout('Seated Spinal Twist')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 9: Figure 4 Stretch -->
-      <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
-           onclick="openCoachChat('How do I do figure 4 stretch?')">
+      <article class="exercise-card bg-white rounded-xl shadow-lg p-4">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/figure-4-stretch.jpg"
                alt="Figure 4 Stretch"
@@ -368,17 +330,13 @@
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit on the edge of the chair, cross one ankle over the opposite knee, and gently press down on the raised knee.
         </p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
-        </button>
         <button onclick="event.stopPropagation(); logWorkout('Figure 4 Stretch')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 10: Seated Shoulder Rolls -->
-      <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
-           onclick="openCoachChat('How do I do seated shoulder rolls?')">
+      <article class="exercise-card bg-white rounded-xl shadow-lg p-4">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-shoulder-rolls.jpg"
                alt="Seated Shoulder Rolls"
@@ -395,17 +353,13 @@
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, roll your shoulders up, back, and down in a circular motion. Repeat 10 times, then reverse.
         </p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
-        </button>
         <button onclick="event.stopPropagation(); logWorkout('Seated Shoulder Rolls')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 11: Seated Neck Stretches -->
-      <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
-           onclick="openCoachChat('How do I do seated neck stretches?')">
+      <article class="exercise-card bg-white rounded-xl shadow-lg p-4">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-neck-stretches.jpg"
                alt="Seated Neck Stretches"
@@ -422,17 +376,13 @@
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, slowly tilt your head toward one shoulder, hold, and then switch to the other side.
         </p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
-        </button>
         <button onclick="event.stopPropagation(); logWorkout('Seated Neck Stretches')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 12: Standing Calf Raises -->
-      <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
-           onclick="openCoachChat('How do I do standing calf raises?')">
+      <article class="exercise-card bg-white rounded-xl shadow-lg p-4">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/standing-calf-raises.jpg"
                alt="Standing Calf Raises"
@@ -449,17 +399,13 @@
         <p class="text-gray-700 mb-4 leading-relaxed">
           Stand up straight, hold onto the back of the chair, and raise your heels off the ground. Lower back down.
         </p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
-        </button>
         <button onclick="event.stopPropagation(); logWorkout('Standing Calf Raises')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
       <!-- Exercise 13: Warrior I / Hip Flexor Stretch -->
-      <div class="exercise-card bg-white rounded-xl shadow-lg p-4 cursor-pointer"
-           onclick="openCoachChat('How do I do warrior one hip flexor stretch?')">
+      <article class="exercise-card bg-white rounded-xl shadow-lg p-4">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/warrior-1-hip-flexor.jpg"
                alt="Warrior I Hip Flexor Stretch"
@@ -476,13 +422,10 @@
         <p class="text-gray-700 mb-4 leading-relaxed">
           Stand with legs wide, turn one foot out, bend that knee, and stretch the other leg straight. Reach arms overhead.
         </p>
-        <button class="mt-2 w-full bg-blue-50 text-blue-600 py-2 rounded-lg text-xs font-semibold hover:bg-blue-100 transition">
-          🎤 Get Coaching
-        </button>
         <button onclick="event.stopPropagation(); logWorkout('Warrior I Hip Flexor Stretch')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
         </button>
-      </div>
+      </article>
 
     </div>
 
