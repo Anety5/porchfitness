@@ -4,7 +4,7 @@ const config = {
   geminiApiKey: 'YOUR_GEMINI_API_KEY_HERE',
   
   // ElevenLabs Agent ID (public, safe to commit)
-  elevenLabsAgentId: 'agent_5201kd2291x0ffysp0e4z7c57ksr'
+  elevenLabsAgentId: 'agent_1501kd4t27ftf2br1c7p1tm53kjg'
 };
 
 export default config;
