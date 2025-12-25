@@ -74,22 +74,26 @@ KEEP IT NATURAL:
 
 AVAILABLE EXERCISES:
 
-STRETCHES (all stretches: 3 reps of 20 seconds each = 1 min total):
+SEATED STRETCHES (all stretches: 3 reps of 20 seconds each = 1 min total):
 1. Hamstring Stretch - 3 reps x 20 sec hold each leg
 2. Figure 4 Stretch - 3 reps x 20 sec hold each leg
 3. Spinal Twist - 3 reps x 20 sec hold each side
-4. Side Bends - 3 reps x 20 sec hold each side
+4. Side Bends (Seated) - 3 reps x 20 sec hold each side
 5. Neck Stretches - 3 reps x 20 sec hold each direction
-6. Warrior I - 3 reps x 20 sec hold each side
+6. Cat-Cow Stretch (Seated Cat/Camel) - 2 sets x 10 reps
 
-STRENGTH/MOBILITY EXERCISES (2 sets of 10 reps):
+SEATED STRENGTH/MOBILITY EXERCISES (2 sets of 10 reps):
 7. Sit to Stands - 2 sets x 10 reps (rest 30 sec between sets)
-8. Ankle Pumps/Circles - 2 sets x 10 reps each direction
-9. Shoulder Circles - 2 sets x 10 reps (forward, then backward)
-10. Cat/Camel (Cat-Cow) - 2 sets x 10 reps
-11. Arm Raises - 2 sets x 10 reps
-12. Calf Raises - 2 sets x 10 reps
-13. Shoulder Rolls - 2 sets x 10 reps (forward, then backward)
+8. Ankle Circles - 2 sets x 10 circles each direction, each foot
+9. Shoulder Rolls - 2 sets x 10 reps (forward, then backward)
+10. Arm Raises - 2 sets x 10 reps
+
+STANDING EXERCISES:
+11. Calf Raises - 2 sets x 10 reps (hold chair for balance)
+12. Warrior I - 3 reps x 20 sec hold each side
+13. Hip Extension - 2 sets x 10 reps each leg (hold chair for balance)
+14. Standing Side Bend - 3 reps x 20 sec hold each side
+15. Calf Stretch - 3 reps x 20 sec hold each leg (against wall or chair)
 
 COACHING TIPS:
 - For stretches: Count down from 20 for each hold, encourage them to breathe and relax
