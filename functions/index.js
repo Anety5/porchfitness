@@ -151,11 +151,20 @@ exports.logWorkout = onRequest(
       }
 
       try {
-        const {userId, exerciseName, painLevel, notes, repsCompleted, durationSeconds} = req.body;
+        const {
+          userId,
+          exerciseName,
+          painLevel,
+          notes,
+          repsCompleted,
+          durationSeconds,
+        } = req.body;
 
         if (!userId || !exerciseName || painLevel === undefined) {
           res.status(400).json({
-            error: "Missing required fields: userId, exerciseName, and painLevel are required",
+            error:
+              "Missing required fields: userId, exerciseName, " +
+              "and painLevel are required",
           });
           return;
         }
@@ -188,7 +197,9 @@ exports.logWorkout = onRequest(
 
         res.status(200).json({
           success: true,
-          message: `Great job! Logged ${exerciseName} workout with pain level ${painLevel}/10.`,
+          message:
+            `Great job! Logged ${exerciseName} workout ` +
+            `with pain level ${painLevel}/10.`,
         });
       } catch (error) {
         console.error("Error logging workout:", error);
