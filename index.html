@@ -97,6 +97,12 @@
     .skip-link:focus {
       top: 0;
     }
+    
+    /* Style ElevenLabs attribution to be more visible */
+    elevenlabs-convai::part(powered-by) {
+      color: #94a3b8 !important;
+      opacity: 1 !important;
+    }
   </style>
 </head>
 <body class="bg-white min-h-screen">
@@ -183,6 +189,7 @@
           Hamstring Stretch
         </h3>
         <p class="text-gray-600 mb-3">Seated • Legs • Flexibility</p>
+        <p class="text-sm font-semibold text-purple-600 mb-2">📋 3 reps × 20 sec hold each side</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit on chair edge, extend one leg straight, gently reach toward toes. Hold 20-30 seconds each side.
         </p>
@@ -200,6 +207,7 @@
         </div>
         <h3 class="font-bold text-gray-900 mb-2">Sit to Stands</h3>
         <p class="text-gray-600 mb-3">Seated • Strength</p>
+        <p class="text-sm font-semibold text-blue-600 mb-2">📋 2 sets × 10 reps</p>
         <p class="text-gray-700 mb-4">Stand up from chair without using hands. Builds leg strength.</p>
         <button onclick="event.stopPropagation(); logWorkout('Sit to Stands')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
@@ -215,6 +223,7 @@
         </div>
         <h3 class="font-bold text-gray-900 mb-2">Cat-Cow Stretch</h3>
         <p class="text-gray-600 mb-3">Seated • Back</p>
+        <p class="text-sm font-semibold text-blue-600 mb-2">📋 2 sets × 10 reps</p>
         <p class="text-gray-700 mb-4">Gentle spinal mobility. Arch and round your back slowly.</p>
         <button onclick="event.stopPropagation(); logWorkout('Seated Cat-Cow')" class="mt-2 w-full bg-green-50 text-green-700 py-3 rounded-lg font-semibold hover:bg-green-100 transition border-2 border-green-200">
           ✅ Log Workout
@@ -236,6 +245,7 @@
           Arm Raises
         </h3>
         <p class="text-gray-600 mb-3">Seated • Shoulders</p>
+        <p class="text-sm font-semibold text-blue-600 mb-2">📋 2 sets × 10 reps</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, raise arms to side to shoulder height, lower back down. Repeat 10-15 times.
         </p>
@@ -259,6 +269,7 @@
           Ankle Circles
         </h3>
         <p class="text-gray-600 mb-3">Seated • Ankles</p>
+        <p class="text-sm font-semibold text-blue-600 mb-2">📋 2 sets × 10 circles each direction</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, lift one foot, and draw circles in the air with your toes. Switch directions halfway.
         </p>
@@ -282,6 +293,7 @@
           Side Bends
         </h3>
         <p class="text-gray-600 mb-3">Seated • Core</p>
+        <p class="text-sm font-semibold text-purple-600 mb-2">📋 3 reps × 20 sec hold each side</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, reach one arm overhead and lean to the opposite side. Hold onto the chair with the other hand.
         </p>
@@ -305,6 +317,7 @@
           Spinal Twist
         </h3>
         <p class="text-gray-600 mb-3">Seated • Spine</p>
+        <p class="text-sm font-semibold text-purple-600 mb-2">📋 3 reps × 20 sec hold each side</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, place one hand on the back of the chair, twist your torso and look over your shoulder.
         </p>
@@ -328,6 +341,7 @@
           Figure 4 Stretch
         </h3>
         <p class="text-gray-600 mb-3">Seated • Hip Opener</p>
+        <p class="text-sm font-semibold text-purple-600 mb-2">📋 3 reps × 20 sec hold each side</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit on the edge of the chair, cross one ankle over the opposite knee, and gently press down on the raised knee.
         </p>
@@ -351,6 +365,7 @@
           Shoulder Rolls
         </h3>
         <p class="text-gray-600 mb-3">Seated • Shoulders</p>
+        <p class="text-sm font-semibold text-blue-600 mb-2">📋 2 sets × 10 reps each direction</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, roll your shoulders up, back, and down in a circular motion. Repeat 10 times, then reverse.
         </p>
@@ -374,6 +389,7 @@
           Neck Stretches
         </h3>
         <p class="text-gray-600 mb-3">Seated • Neck</p>
+        <p class="text-sm font-semibold text-purple-600 mb-2">📋 3 reps × 20 sec hold each side</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Sit up straight, slowly tilt your head toward one shoulder, hold, and then switch to the other side.
         </p>
@@ -397,6 +413,7 @@
           Calf Raises
         </h3>
         <p class="text-gray-600 mb-3">Standing • Legs</p>
+        <p class="text-sm font-semibold text-blue-600 mb-2">📋 2 sets × 10 reps</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Stand up straight, hold onto the back of the chair, and raise your heels off the ground. Lower back down.
         </p>
@@ -420,6 +437,7 @@
           Warrior I
         </h3>
         <p class="text-gray-600 mb-3">Standing • Hip Flexors</p>
+        <p class="text-sm font-semibold text-purple-600 mb-2">📋 3 reps × 20 sec hold each side</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Stand with legs wide, turn one foot out, bend that knee, and stretch the other leg straight. Reach arms overhead.
         </p>
@@ -443,6 +461,7 @@
           Hip Extension
         </h3>
         <p class="text-gray-600 mb-3">Standing • Hips & Glutes</p>
+        <p class="text-sm font-semibold text-blue-600 mb-2">📋 2 sets × 10 reps each leg</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Stand behind chair, hold for balance. Lift one leg straight back, keeping knee straight. Lower and repeat.
         </p>
@@ -466,6 +485,7 @@
           Standing Side Bend
         </h3>
         <p class="text-gray-600 mb-3">Standing • Core & Spine</p>
+        <p class="text-sm font-semibold text-purple-600 mb-2">📋 3 reps × 20 sec hold each side</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Stand with feet hip-width apart, reach one arm overhead and lean to the opposite side. Hold for 15-20 seconds each side.
         </p>
@@ -489,6 +509,7 @@
           Calf Stretch
         </h3>
         <p class="text-gray-600 mb-3">Standing • Calves</p>
+        <p class="text-sm font-semibold text-purple-600 mb-2">📋 3 reps × 20 sec hold each leg</p>
         <p class="text-gray-700 mb-4 leading-relaxed">
           Stand facing wall, step one foot back, keep heel down and knee straight. Lean forward to feel stretch in back calf.
         </p>
