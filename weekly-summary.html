@@ -146,7 +146,11 @@
 
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
-                window.location.href = 'index.html';
+                // Show message that sign-in is required
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('noData').classList.remove('hidden');
+                document.querySelector('#noData h2').textContent = 'Sign In Required';
+                document.querySelector('#noData p').textContent = 'Please sign in from the home page to view your weekly summary and track your progress.';
                 return;
             }
 
