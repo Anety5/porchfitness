@@ -78,7 +78,7 @@ firebase deploy --only firestore:rules
 4. Button should change to "Sign Out"
 
 #### Test 3: Exercise Cards
-1. Scroll through all 13 exercise cards
+1. Scroll through all 15 exercise cards
 2. Each should have:
    - Exercise name
    - Description

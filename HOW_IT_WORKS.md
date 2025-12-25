@@ -135,7 +135,7 @@ users/
 ## 🎯 **User Flow - Complete Journey**
 
 ### Step 1: Choose Exercise
-- User sees 13 exercise cards with descriptions
+- User sees 15 exercise cards with descriptions
 - Each card shows: name, type (seated/standing), brief instructions
 - Example: "Sit on chair edge, extend leg, reach toward toes. Hold 20-30 seconds."
 

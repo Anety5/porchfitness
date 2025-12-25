@@ -49,7 +49,7 @@
 - [ ] Test: Multiple workouts (progress-based greeting)
 
 ### 4. Update App Content
-- [ ] Search for "13 exercises" and change to "15 exercises"
+- [x] Search for "13 exercises" and change to "15 exercises"
 - [ ] Update README.md with accurate feature descriptions
 - [ ] Verify HOW_IT_WORKS.md is current
 - [ ] Add note about "12 seated, 3 standing" exercises
@@ -243,7 +243,7 @@
 ## 🔵 TESTING
 
 ### Functional
-- [ ] All 13 exercise descriptions
+- [ ] All 15 exercise descriptions
 - [ ] Anonymous sign-in
 - [ ] Google sign-in
 - [ ] Manual logging
@@ -284,7 +284,7 @@
 git add .
 git commit -m "feat: Complete AI fitness coach
 
-- 13 chair exercises for seniors
+- 15 chair exercises for seniors
 - ElevenLabs Conversational AI
 - Gemini-powered summaries
 - Chart.js progress tracking
