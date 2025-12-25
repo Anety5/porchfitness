@@ -1,12 +1,12 @@
 # PorchFitness - ElevenLabs Accelerate Challenge
 
-**Voice-Powered Chair Exercises for Seniors**
+**Voice-Powered Chair Exercises for Everyone**
 
 ---
 
 ## Project Overview
 
-PorchFitness is a voice-first web application that guides older adults through gentle chair exercises using ElevenLabs Conversational AI powered by Google Gemini. The AI coach remembers your progress, tracks your workouts, and provides personalized insights—all without app downloads or complicated interfaces.
+PorchFitness is a voice-first web application that guides users through gentle chair exercises and standing exercises (using a chair for balance support) using ElevenLabs Conversational AI powered by Google Gemini. The AI coach remembers your progress, tracks your workouts, and provides personalized insights—all without app downloads or complicated interfaces. Perfect for seniors, people with limited mobility, those recovering from injury, or anyone seeking accessible fitness.
 
 ---
 
