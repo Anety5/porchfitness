@@ -1,5 +1,5 @@
 // PorchFitness Service Worker
-const CACHE_NAME = 'porchfitness-v1';
+const CACHE_NAME = 'porchfitness-v2-dec25';
 const urlsToCache = [
   '/',
   '/index.html',
