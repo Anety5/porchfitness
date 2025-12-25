@@ -1,7 +1,7 @@
 {
   "name": "PorchFitness - Voice-Coached Chair Exercises",
   "short_name": "PorchFitness",
-  "description": "14 gentle chair exercises with AI voice coaching for seniors. Safe, accessible fitness from your porch.",
+  "description": "15 gentle exercises (12 seated, 3 standing) with AI voice coaching. Safe, accessible fitness for everyone.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

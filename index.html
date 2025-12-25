@@ -624,7 +624,13 @@
               await firebase.auth().signInWithPopup(provider);
             } catch (error) {
               console.error('Sign in error:', error);
-              alert('Sign in failed. Please try again.');
+              // If OAuth fails, use anonymous auth as fallback
+              if (error.code === 'auth/admin-restricted-operation' || error.code === 'auth/unauthorized-domain') {
+                alert('Google Sign-In temporarily unavailable. Using guest mode - your workouts will still be tracked!');
+                await firebase.auth().signInAnonymously();
+              } else {
+                alert('Sign in failed: ' + error.message);
+              }
             }
           };
         } else {
