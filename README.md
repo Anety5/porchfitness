@@ -14,6 +14,7 @@ PorchFitness is a voice-first web application that guides users through gentle c
 
 - **Voice-First Design** - Natural conversation with AI coach (Samantha)
 - **15 Gentle Exercises** - 12 seated, 3 standing (with support)
+- **Expandable Exercise Cards** - Click any exercise to see detailed step-by-step instructions with images
 - **AI Memory & Progress Tracking** - Remembers your workouts and provides personalized insights
 - **Pain Level Monitoring** - Track discomfort levels (1-10 scale) over time
 - **Weekly AI Summaries** - Gemini-powered insights on your progress
@@ -28,7 +29,7 @@ PorchFitness is a voice-first web application that guides users through gentle c
 
 1. Visit https://porchfitness.com
 2. Sign in with Google (one click)
-3. Choose any exercise card
+3. Click any exercise card to see detailed instructions
 4. Talk to Samantha - she'll guide you through the exercise
 5. Rate your pain level after each workout
 6. Check your progress anytime at the Progress or Weekly Summary pages
@@ -98,10 +99,10 @@ PorchFitness is a voice-first web application that guides users through gentle c
 
 ## Project Status
 
-**Date:** December 24, 2025  
+**Date:** December 26, 2025  
 **Status:** ✅ Deployed and ready for submission  
-**Infrastructure:** All Firebase services configured and working  
-**Known Issues:** Google Sign-In waiting for OAuth propagation (fallback ready)
+**Latest Update:** Added expandable exercise cards with detailed step-by-step instructions  
+**Infrastructure:** All Firebase services configured and working
 
 ---
 

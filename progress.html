@@ -374,26 +374,25 @@
         .sort((a, b) => b[1] - a[1])
         .slice(0, 8);
 
-      const ctx = document.getElementById('exerciseChart');
-      exerciseChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: sorted.map(e => e[0]),
-          datasets: [{
-            data: sorted.map(e => e[1]),
-            backgroundColor: [
-              '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
-              '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'
-            ]
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'right' }
-          }
-        }
-      });
+      const maxCount = Math.max(...sorted.map(e => e[1]));
+      
+      const html = sorted.map(([exercise, count]) => {
+        const percentage = (count / maxCount) * 100;
+        return `
+          <div class="flex items-center gap-4">
+            <div class="w-48 text-right">
+              <span class="text-gray-700 font-medium">${exercise}</span>
+            </div>
+            <div class="flex-1 bg-gray-100 rounded-full h-8 overflow-hidden">
+              <div class="bg-blue-500 h-full rounded-full flex items-center justify-end pr-3" style="width: ${percentage}%">
+                <span class="text-white font-bold text-sm">${count}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      document.getElementById('exerciseChart').innerHTML = html;
     }
 
     function displayRecentActivity(sessions) {
