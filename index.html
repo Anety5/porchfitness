@@ -182,10 +182,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16" role="list" aria-label="Exercise list">
 
       <!-- Exercise 2: Seated Hamstring Stretch -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6"
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
                role="listitem"
                tabindex="0"
-               aria-label="Seated Hamstring Stretch for legs">
+               aria-label="Seated Hamstring Stretch for legs"
+               onclick="openExerciseDetail('Seated Hamstring Stretch')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-hamstring-stretch.jpg"
                alt="Seated Hamstring Stretch"
@@ -209,7 +210,8 @@
       </article>
 
       <!-- Exercise 3: Sit to Stands -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Sit to Stands')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/sit-to-stands.jpg" alt="Sit to Stands" class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -225,7 +227,8 @@
       </article>
 
       <!-- Exercise 4: Seated Cat-Cow -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Seated Cat-Cow')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-cat-cow.jpg" alt="Seated Cat-Cow" class="w-full h-full object-cover rounded-lg"
                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -241,7 +244,8 @@
       </article>
 
       <!-- Exercise 5: Seated Arm Raises -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Seated Arm Raises')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-arm-raises.jpg"
                alt="Seated Arm Raises"
@@ -265,7 +269,8 @@
       </article>
 
       <!-- Exercise 6: Seated Ankle Circles -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Seated Ankle Circles')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-ankle-circles.jpg"
                alt="Seated Ankle Circles"
@@ -289,7 +294,8 @@
       </article>
 
       <!-- Exercise 7: Seated Side Bends -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Seated Side Bends')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-side-bends.jpg"
                alt="Seated Side Bends"
@@ -313,7 +319,8 @@
       </article>
 
       <!-- Exercise 8: Seated Spinal Twist -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Seated Spinal Twist')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-spinal-twist.jpg"
                alt="Seated Spinal Twist"
@@ -337,7 +344,8 @@
       </article>
 
       <!-- Exercise 9: Figure 4 Stretch -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Figure 4 Stretch')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/figure-4-stretch.jpg"
                alt="Figure 4 Stretch"
@@ -361,7 +369,8 @@
       </article>
 
       <!-- Exercise 10: Seated Shoulder Rolls -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Seated Shoulder Rolls')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-shoulder-rolls.jpg"
                alt="Seated Shoulder Rolls"
@@ -385,7 +394,8 @@
       </article>
 
       <!-- Exercise 11: Seated Neck Stretches -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Seated Neck Stretches')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/seated-neck-stretches.jpg"
                alt="Seated Neck Stretches"
@@ -409,7 +419,8 @@
       </article>
 
       <!-- Exercise 12: Standing Calf Raises -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Standing Calf Raises')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/standing-calf-raises.jpg"
                alt="Standing Calf Raises"
@@ -433,7 +444,8 @@
       </article>
 
       <!-- Exercise 13: Warrior I / Hip Flexor Stretch -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Warrior I Hip Flexor Stretch')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/warrior-1-hip-flexor.jpg"
                alt="Warrior I Hip Flexor Stretch"
@@ -457,7 +469,8 @@
       </article>
 
       <!-- Exercise 14: Standing Hip Extension -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Standing Hip Extension')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/standing-hip-extension.png"
                alt="Standing Hip Extension"
@@ -481,7 +494,8 @@
       </article>
 
       <!-- Exercise 15: Standing Side Bend -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Standing Side Bend')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/standing-side-bend.png"
                alt="Standing Side Bend"
@@ -505,7 +519,8 @@
       </article>
 
       <!-- Exercise 16: Standing Calf Stretch -->
-      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6">
+      <article class="exercise-card bg-white rounded-2xl shadow-xl p-6 cursor-pointer"
+               onclick="openExerciseDetail('Standing Calf Stretch')">
         <div class="bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-4 h-48 flex items-center justify-center">
           <img src="images/standing-calf-stretch.png"
                alt="Standing Calf Stretch"
@@ -562,6 +577,22 @@
       <button onclick="saveWorkoutLog()" class="w-full bg-blue-600 text-white btn-primary hover:bg-blue-700 transition-all shadow-xl text-2xl">
         💾 Save Workout Log
       </button>
+    </div>
+  </div>
+
+  <!-- Exercise Detail Modal -->
+  <div id="exerciseDetailModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-6" role="dialog" aria-modal="true">
+    <div class="bg-white rounded-3xl p-10 max-w-4xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeExerciseDetail()" class="absolute top-4 right-4 text-4xl text-gray-500 hover:text-gray-700" aria-label="Close exercise details">×</button>
+      <div id="exerciseDetailContent"></div>
+      <div class="flex gap-4 mt-8">
+        <button onclick="logWorkoutFromDetail()" class="flex-1 bg-blue-600 text-white py-4 px-6 rounded-xl font-bold text-xl hover:bg-blue-700 transition">
+          ✅ Log This Workout
+        </button>
+        <button onclick="closeExerciseDetail()" class="flex-1 bg-gray-200 text-gray-700 py-4 px-6 rounded-xl font-bold text-xl hover:bg-gray-300 transition">
+          Close
+        </button>
+      </div>
     </div>
   </div>
 
@@ -722,6 +753,318 @@
     document.getElementById('logWorkoutModal')?.addEventListener('click', (e) => {
       if (e.target.id === 'logWorkoutModal') {
         closeLogWorkoutModal();
+      }
+    });
+
+    // Exercise Detail Modal - Complete data for all 15 exercises
+    const exerciseDetails = {
+      'Seated Hamstring Stretch': {
+        emoji: '🦵',
+        category: 'Seated • Legs • Flexibility',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Sit on chair edge, extend one leg straight, gently reach toward toes. Hold 20-30 seconds each side.',
+        instructions: [
+          'Sit on the edge of your chair with good posture',
+          'Extend one leg straight out in front of you with heel on the floor',
+          'Keep your back straight and lean forward from your hips',
+          'Reach gently toward your toes (don\'t force it)',
+          'Hold for 20-30 seconds, breathing deeply',
+          'Switch sides and repeat'
+        ],
+        image: 'images/seated-hamstring-stretch.jpg'
+      },
+      'Sit to Stands': {
+        emoji: '💪',
+        category: 'Seated • Strength',
+        protocol: '2 sets × 10 reps',
+        description: 'Stand up from chair without using hands. Builds leg strength.',
+        instructions: [
+          'Sit toward the front edge of your chair',
+          'Place feet flat on floor, hip-width apart',
+          'Cross arms over chest or extend forward',
+          'Lean slightly forward and stand up using only leg muscles',
+          'Stand fully upright',
+          'Slowly lower back down to seated position',
+          'Repeat for 10 repetitions'
+        ],
+        image: 'images/sit-to-stands.jpg'
+      },
+      'Seated Cat-Cow': {
+        emoji: '🐱',
+        category: 'Seated • Back',
+        protocol: '2 sets × 10 reps',
+        description: 'Gentle spinal mobility. Arch and round your back slowly.',
+        instructions: [
+          'Sit up straight with feet flat on floor',
+          'Place hands on knees',
+          'Inhale: arch your back, lift chest, look up slightly (Cow)',
+          'Exhale: round your spine, drop head forward, pull belly in (Cat)',
+          'Move slowly between these two positions',
+          'Repeat 10 times, coordinating breath with movement'
+        ],
+        image: 'images/seated-cat-cow.jpg'
+      },
+      'Seated Arm Raises': {
+        emoji: '🙌',
+        category: 'Seated • Shoulders',
+        protocol: '2 sets × 10 reps',
+        description: 'Sit up straight, raise arms to side to shoulder height, lower back down. Repeat 10-15 times.',
+        instructions: [
+          'Sit up straight with good posture',
+          'Start with arms at your sides',
+          'Raise both arms out to the sides to shoulder height',
+          'Keep elbows slightly bent',
+          'Pause briefly at the top',
+          'Lower arms slowly back to starting position',
+          'Repeat for 10-15 repetitions'
+        ],
+        image: 'images/seated-arm-raises.jpg'
+      },
+      'Seated Ankle Circles': {
+        emoji: '🦶',
+        category: 'Seated • Ankles',
+        protocol: '2 sets × 10 circles each direction',
+        description: 'Sit up straight, lift one foot, and draw circles in the air with your toes. Switch directions halfway.',
+        instructions: [
+          'Sit comfortably with good posture',
+          'Lift one foot slightly off the ground',
+          'Draw circles in the air with your toes',
+          'Make 10 circles in one direction',
+          'Switch and make 10 circles in the opposite direction',
+          'Lower that foot and repeat with the other foot'
+        ],
+        image: 'images/seated-ankle-circles.jpg'
+      },
+      'Seated Side Bends': {
+        emoji: '🤸',
+        category: 'Seated • Core',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Sit up straight, reach one arm overhead and lean to the opposite side. Hold onto the chair with the other hand.',
+        instructions: [
+          'Sit up straight in the middle of your chair',
+          'Place one hand on the chair seat for support',
+          'Raise the other arm overhead',
+          'Lean to the side where your hand is on the chair',
+          'Feel the stretch along your side',
+          'Hold for 20 seconds',
+          'Return to center and switch sides'
+        ],
+        image: 'images/seated-side-bends.jpg'
+      },
+      'Seated Spinal Twist': {
+        emoji: '🔄',
+        category: 'Seated • Spine',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Sit up straight, place one hand on the back of the chair, twist your torso and look over your shoulder.',
+        instructions: [
+          'Sit up straight with feet flat on floor',
+          'Place right hand on the back of the chair',
+          'Place left hand on right knee',
+          'Twist your torso to the right',
+          'Look over your right shoulder',
+          'Hold for 20 seconds, breathing deeply',
+          'Return to center and repeat on the other side'
+        ],
+        image: 'images/seated-spinal-twist.jpg'
+      },
+      'Figure 4 Stretch': {
+        emoji: '4️⃣',
+        category: 'Seated • Hip Opener',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Sit on the edge of the chair, cross one ankle over the opposite knee, and gently press down on the raised knee.',
+        instructions: [
+          'Sit toward the front of your chair',
+          'Place right ankle on top of left knee',
+          'Keep right foot flexed (toes pointing up)',
+          'Gently press down on right knee',
+          'Lean slightly forward for a deeper stretch',
+          'Hold for 20-30 seconds',
+          'Switch sides and repeat'
+        ],
+        image: 'images/figure-4-stretch.jpg'
+      },
+      'Seated Shoulder Rolls': {
+        emoji: '🔄',
+        category: 'Seated • Shoulders',
+        protocol: '2 sets × 10 reps each direction',
+        description: 'Sit up straight, roll your shoulders up, back, and down in a circular motion. Repeat 10 times, then reverse.',
+        instructions: [
+          'Sit up straight with arms at sides',
+          'Roll shoulders up toward ears',
+          'Roll them back',
+          'Roll them down',
+          'Complete 10 circles in this direction',
+          'Reverse: roll forward, up, back, down',
+          'Complete 10 circles in reverse direction'
+        ],
+        image: 'images/seated-shoulder-rolls.jpg'
+      },
+      'Seated Neck Stretches': {
+        emoji: '💆',
+        category: 'Seated • Neck',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Sit up straight, slowly tilt your head toward one shoulder, hold, and then switch to the other side.',
+        instructions: [
+          'Sit up straight with shoulders relaxed',
+          'Slowly tilt head toward right shoulder',
+          'Keep shoulders down and relaxed',
+          'Hold for 20 seconds',
+          'Return head to center',
+          'Tilt head toward left shoulder',
+          'Hold for 20 seconds, breathing deeply'
+        ],
+        image: 'images/seated-neck-stretches.jpg'
+      },
+      'Standing Calf Raises': {
+        emoji: '🦿',
+        category: 'Standing • Legs',
+        protocol: '2 sets × 10 reps',
+        description: 'Stand up straight, hold onto the back of the chair, and raise your heels off the ground. Lower back down.',
+        instructions: [
+          'Stand behind chair, holding back for balance',
+          'Feet hip-width apart, toes forward',
+          'Rise up onto your toes',
+          'Lift heels as high as comfortable',
+          'Pause at the top',
+          'Lower heels slowly back to floor',
+          'Repeat for 10 repetitions'
+        ],
+        image: 'images/standing-calf-raises.jpg'
+      },
+      'Warrior I Hip Flexor Stretch': {
+        emoji: '🧘',
+        category: 'Standing • Hip Flexors',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Stand with legs wide, turn one foot out, bend that knee, and stretch the other leg straight. Reach arms overhead.',
+        instructions: [
+          'Stand with feet wide apart',
+          'Turn right foot out 90 degrees',
+          'Keep left foot pointing forward',
+          'Bend right knee over ankle',
+          'Keep left leg straight',
+          'Raise arms overhead',
+          'Hold for 20 seconds, then switch sides'
+        ],
+        image: 'images/warrior-1-hip-flexor.jpg'
+      },
+      'Standing Hip Extension': {
+        emoji: '🦵',
+        category: 'Standing • Hips & Glutes',
+        protocol: '2 sets × 10 reps each leg',
+        description: 'Stand behind chair, hold for balance. Lift one leg straight back, keeping knee straight. Lower and repeat.',
+        instructions: [
+          'Stand behind chair, holding for balance',
+          'Stand on left leg',
+          'Lift right leg straight back',
+          'Keep knee straight and core engaged',
+          'Don\'t lean forward',
+          'Lower leg slowly',
+          'Complete 10 reps, then switch legs'
+        ],
+        image: 'images/standing-hip-extension.png'
+      },
+      'Standing Side Bend': {
+        emoji: '🤸',
+        category: 'Standing • Core & Spine',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Stand with feet hip-width apart, reach one arm overhead and lean to the opposite side. Hold for 15-20 seconds each side.',
+        instructions: [
+          'Stand with feet hip-width apart',
+          'Reach right arm overhead',
+          'Place left hand on hip',
+          'Lean to the left side',
+          'Feel stretch along right side',
+          'Hold for 20 seconds',
+          'Return to center and switch sides'
+        ],
+        image: 'images/standing-side-bend.png'
+      },
+      'Standing Calf Stretch': {
+        emoji: '🦿',
+        category: 'Standing • Calves',
+        protocol: '3 reps × 20 sec hold each leg',
+        description: 'Stand facing wall, step one foot back, keep heel down and knee straight. Lean forward to feel stretch in back calf.',
+        instructions: [
+          'Stand facing wall, hands on wall for support',
+          'Step right foot back about 2 feet',
+          'Keep right heel on ground',
+          'Keep right knee straight',
+          'Bend left knee slightly',
+          'Lean forward into the wall',
+          'Feel stretch in right calf, hold 20 seconds',
+          'Switch legs and repeat'
+        ],
+        image: 'images/standing-calf-stretch.png'
+      }
+    };
+
+    // Track current exercise being viewed
+    let currentDetailExercise = '';
+
+    // Open exercise detail modal
+    function openExerciseDetail(exerciseName) {
+      const details = exerciseDetails[exerciseName];
+      if (!details) {
+        console.error('Exercise details not found:', exerciseName);
+        return;
+      }
+
+      currentDetailExercise = exerciseName;
+      
+      // Create detailed content
+      const content = `
+        <div class="mb-6">
+          <img src="${details.image}" 
+               alt="${exerciseName}" 
+               class="w-full rounded-xl shadow-lg mb-4"
+               onerror="this.style.display='none';">
+        </div>
+        
+        <div class="text-center mb-6">
+          <h2 class="text-3xl font-bold text-gray-900 mb-2">${exerciseName}</h2>
+          <p class="text-xl text-gray-600 mb-2">${details.category}</p>
+          <p class="text-lg font-semibold text-blue-600">📋 ${details.protocol}</p>
+        </div>
+        
+        <div class="mb-6">
+          <p class="text-lg text-gray-700 leading-relaxed">${details.description}</p>
+        </div>
+        
+        <div class="bg-blue-50 rounded-xl p-6">
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Step-by-Step Instructions:</h3>
+          <ol class="space-y-3">
+            ${details.instructions.map((step, index) => 
+              `<li class="flex gap-3">
+                <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">${index + 1}</span>
+                <span class="text-gray-700 pt-1">${step}</span>
+              </li>`
+            ).join('')}
+          </ol>
+        </div>
+      `;
+      
+      document.getElementById('exerciseDetailContent').innerHTML = content;
+      document.getElementById('exerciseDetailModal').classList.remove('hidden');
+    }
+
+    // Close exercise detail modal
+    function closeExerciseDetail() {
+      document.getElementById('exerciseDetailModal').classList.add('hidden');
+      currentDetailExercise = '';
+    }
+
+    // Log workout from detail view
+    function logWorkoutFromDetail() {
+      if (currentDetailExercise) {
+        closeExerciseDetail();
+        logWorkout(currentDetailExercise);
+      }
+    }
+
+    // Close detail modal when clicking outside
+    document.getElementById('exerciseDetailModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'exerciseDetailModal') {
+        closeExerciseDetail();
       }
     });
   </script>
