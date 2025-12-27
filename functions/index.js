@@ -155,6 +155,7 @@ exports.logWorkout = onRequest(
           notes,
           repsCompleted,
           durationSeconds,
+          difficultyLevel,
         } = req.body;
 
         if (!userId || !exerciseName || painLevel === undefined) {
@@ -183,6 +184,7 @@ exports.logWorkout = onRequest(
           notes: notes || "",
           repsCompleted: repsCompleted ? parseInt(repsCompleted) : 0,
           durationSeconds: durationSeconds ? parseInt(durationSeconds) : 0,
+          difficultyLevel: difficultyLevel || null,
           date: admin.firestore.FieldValue.serverTimestamp(),
         };
 

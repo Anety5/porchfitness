@@ -76,10 +76,11 @@
   <!-- Minimal Header -->
   <header style="background-color: var(--surface); border-bottom: 1px solid rgba(0,0,0,0.06);" class="shadow-sm sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-6">
         <a href="index.html" style="color: var(--text);" class="text-3xl font-semibold hover:opacity-70 transition">
           ← Back to Exercises
         </a>
+        <span id="userGreeting" class="text-2xl" style="color: var(--muted);"></span>
       </div>
       <button id="authButton" style="background-color: var(--primary); color: white;" class="px-8 py-3 rounded-full font-medium text-lg hover:opacity-90 transition">
         Sign In
@@ -202,31 +203,41 @@
 
     // Auth button handler
     const authButton = document.getElementById('authButton');
+    const userGreeting = document.getElementById('userGreeting');
     
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         if (user.isAnonymous) {
           authButton.textContent = 'Sign In';
+          userGreeting.textContent = '';
           authButton.onclick = async () => {
             const provider = new firebase.auth.GoogleAuthProvider();
             try {
               await firebase.auth().signInWithPopup(provider);
             } catch (error) {
               console.error('Sign in error:', error);
+              alert('Sign in failed. Please try again.');
             }
           };
         } else {
+          // User is signed in with Google
+          const displayName = user.displayName || user.email || 'User';
+          const firstName = displayName.split(' ')[0];
           authButton.textContent = 'Sign Out';
+          userGreeting.textContent = `Hi ${firstName}`;
           authButton.onclick = async () => {
-            if (confirm('Sign out?')) {
+            if (confirm(`Sign out ${displayName}?`)) {
               await firebase.auth().signOut();
               await firebase.auth().signInAnonymously();
+              window.location.reload();
             }
           };
+          console.log('Signed in as:', displayName, 'UID:', user.uid);
         }
         await loadProgressData(user.uid);
       } else {
         authButton.textContent = 'Sign In';
+        userGreeting.textContent = '';
         await firebase.auth().signInAnonymously();
       }
     });

@@ -33,7 +33,7 @@ gcloud secrets list --project=porchfitness-98628
 
 ## ElevenLabs Configuration
 
-**Agent ID:** `agent_5201kd2291x0ffysp0e4z7c57ksr`
+**Agent ID:** `agent_1501kd4t27ftf2br1c7p1tm53kjg`
 - ✅ Public ID (safe in frontend code)
 - ✅ No API key needed for client-side widget
 - ✅ Already configured in index.html
@@ -53,7 +53,7 @@ Our multilingual support only handles **TEXT**:
 
 **How to enable:**
 1. Go to ElevenLabs dashboard: https://elevenlabs.io/app/conversational-ai
-2. Select your agent: agent_5201kd2291x0ffysp0e4z7c57ksr
+2. Select your agent: agent_1501kd4t27ftf2br1c7p1tm53kjg
 3. In Settings → Languages, enable:
    - Spanish
    - Chinese (Mandarin)
