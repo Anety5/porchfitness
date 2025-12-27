@@ -229,20 +229,38 @@
                 });
 
                 // Call Firebase Function for AI summary
-                const response = await fetch('https://us-central1-porchfitness-98628.cloudfunctions.net/getWeeklySummary', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ userId: userId })
-                });
+                console.log('Calling getWeeklySummary function for user:', userId);
+                try {
+                    const response = await fetch('https://us-central1-porchfitness-98628.cloudfunctions.net/getWeeklySummary', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ userId: userId })
+                    });
 
-                if (!response.ok) {
-                    throw new Error('Failed to generate AI summary');
+                    console.log('Response status:', response.status);
+                    
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('Function error:', errorText);
+                        throw new Error(`Failed to generate AI summary: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    console.log('AI Summary result:', result);
+                    
+                    if (result.summary) {
+                        document.getElementById('aiMessage').textContent = result.summary;
+                    } else {
+                        // Fallback message if no summary generated
+                        document.getElementById('aiMessage').textContent = `Great work this week! You completed ${workouts.length} workout${workouts.length !== 1 ? 's' : ''} and are building a consistent fitness routine. Keep up the excellent progress! Remember to listen to your body and celebrate every movement. You're doing amazing! 💪`;
+                    }
+                } catch (summaryError) {
+                    console.error('Error fetching AI summary:', summaryError);
+                    // Show a nice fallback message
+                    document.getElementById('aiMessage').textContent = `Wonderful progress this week! You completed ${workouts.length} workout${workouts.length !== 1 ? 's' : ''} and stayed active. Every exercise brings you closer to your wellness goals. Keep moving, keep improving! 🌟`;
                 }
-
-                const result = await response.json();
-                document.getElementById('aiMessage').textContent = result.summary;
 
                 // Show content
                 document.getElementById('loading').classList.add('hidden');

@@ -38,6 +38,7 @@ PorchFitness makes exercise accessible through 15 gentle exercises combined with
 📊 Intelligent Progress Tracking:
 - Log workouts manually OR via voice with Samantha
 - Pain level tracking (0-10 scale) for safety
+- Difficulty level tracking (easy/medium/hard)
 - Visual progress charts showing workout trends
 - Weekly summaries with AI-generated insights
 
@@ -45,6 +46,7 @@ PorchFitness makes exercise accessible through 15 gentle exercises combined with
 - Large fonts (18px+ base), high contrast design
 - 56px+ touch targets for easy interaction
 - Full keyboard navigation and ARIA labels
+- Clean white-first design with subtle color accents
 - Works on all devices - desktop, tablet, mobile
 
 🔐 Secure & Private:
@@ -86,12 +88,12 @@ This project showcases the power of combining ElevenLabs' natural conversational
 
 **Key Features:**
 - Voice-activated workout logging with Samantha
-- Manual workout logging with pain tracking (0-10 scale)
+- Manual workout logging with pain tracking (0-10 scale) and difficulty level (easy/medium/hard)
 - AI-generated personalized greetings based on workout history
 - AI-generated weekly summaries with motivational insights
 - 15 gentle exercises (12 seated, 3 standing) with clear instructions
 - Real-time progress charts showing workout trends
-- Senior-accessible design (WCAG compliant)
+- Senior-accessible design with clean white-first aesthetic (WCAG compliant)
 - Offline PWA support
 - Mobile responsive on all devices
 
@@ -162,3 +164,136 @@ This project showcases the power of combining ElevenLabs' natural conversational
 - ❌ NEVER include config.local.js in submission.zip
 - ❌ NEVER include users.json (contains user data)
 - ✅ APP_OVERVIEW_AND_TODO.md is great to include for judges (shows documentation)
+
+---
+
+## Standard Devpost Submission Sections
+
+### 📝 Inspiration
+What inspired us to create PorchFitness was watching family members struggle to find accessible exercise options. Many seniors and people with limited mobility want to stay active but face barriers like expensive gym memberships, intimidating fitness classes, or complicated technology. We saw an opportunity to combine ElevenLabs' natural conversational AI with Google's Gemini to create something truly special - a voice-first fitness companion that feels like having a personal coach on your porch.
+
+The name "PorchFitness" embodies our vision: exercise should be as comfortable and accessible as sitting on your front porch. No special equipment needed, no pressure, just gentle movements guided by Samantha's supportive voice.
+
+### 💡 What It Does
+PorchFitness is a luxury wellness app that makes gentle exercise accessible through AI-powered voice coaching and intelligent progress tracking:
+
+**Voice Coaching with Samantha (ElevenLabs):**
+- Natural conversation for logging workouts: "I did the hamstring stretch, pain level 3, it felt easy"
+- Samantha automatically extracts exercise name, pain level, and difficulty
+- Real-time guidance during exercises
+- Personalized greetings based on your recent workout history
+
+**AI-Powered Insights (Google Gemini):**
+- Generates motivational weekly summaries analyzing your progress
+- Creates personalized workout greetings
+- Identifies pain trends and provides encouragement
+- Adapts messaging based on your consistency
+
+**15 Gentle Exercises:**
+- 12 seated exercises (perfect for limited mobility)
+- 3 standing exercises (for those who want more challenge)
+- Evidence-based movements targeting flexibility, strength, and mobility
+- Clear instructions with rep counts and hold times
+
+**Smart Progress Tracking:**
+- Visual charts showing workout frequency
+- Pain level tracking over time for safety monitoring
+- Difficulty progression tracking (easy/medium/hard)
+- Weekly statistics and trends
+
+**Accessible Design:**
+- Clean white-first aesthetic with subtle color guidance
+- Large fonts (18px base) and high-contrast text
+- 56px+ touch targets for easy clicking
+- Full keyboard navigation and screen reader support
+- Mobile-responsive on all devices
+
+### 🛠️ How We Built It
+**Frontend:**
+- HTML5 with Tailwind CSS for responsive, accessible design
+- Progressive Web App (PWA) with service worker for offline capability
+- Clean white-first design system with CSS variables for consistency
+- Large fonts and touch targets optimized for seniors
+
+**AI Integration:**
+- **ElevenLabs Conversational AI:** Embedded widget (agent_1501kd4t27ftf2br1c7p1tm53kjg) with 3 custom client tools
+  - `getRecentHistory`: Returns recent workouts for personalized greetings
+  - `logWorkout`: Logs exercises with 6 parameters (exerciseName, painLevel, notes, repsCompleted, durationSeconds, difficultyLevel)
+  - `getWeeklySummary`: Returns weekly stats for Gemini to analyze
+- **Google Gemini API (gemini-2.0-flash-001):** Generates personalized insights and weekly summaries
+
+**Backend (Firebase/Google Cloud):**
+- Firebase Hosting for static site deployment
+- Cloud Functions (Node.js) for serverless API endpoints
+- Firestore for real-time database (users/{userId}/sessions collection)
+- Firebase Authentication (Google Sign-In)
+- Secret Manager for secure API key storage
+
+**Development Process:**
+1. Designed 15 evidence-based exercises with clear instructions
+2. Built accessible UI with senior-friendly design principles
+3. Integrated ElevenLabs widget and configured client tools for voice logging
+4. Created Firebase Cloud Functions to handle workout logging and AI queries
+5. Connected Gemini API for intelligent weekly summaries
+6. Implemented progress tracking with visual charts
+7. Optimized for mobile and tested accessibility features
+8. Deployed to Firebase Hosting
+
+### 🚧 Challenges We Ran Into
+**1. ElevenLabs Widget Not Loading:**
+Widget wouldn't appear - script URL had changed from `elevenlabs.io/convai-widget/index.js` to `unpkg.com/@elevenlabs/convai-widget-embed`. Critical fix that unblocked voice features.
+
+**2. Agent Credits Exhausted:**
+Original ElevenLabs agent ran out of credits mid-development. Had to create new agent (agent_1501kd4t27ftf2br1c7p1tm53kjg) and update all configuration.
+
+**3. Gemini API Cost Management:**
+Initially used gemini-1.5-pro which was expensive. Switched to gemini-2.0-flash-001 for better cost efficiency while maintaining quality insights.
+
+**4. Firestore Timestamp Issues:**
+Progress page showed no data. Fixed by converting JavaScript Dates to `firebase.firestore.Timestamp.fromDate()` for proper query comparisons.
+
+**5. UI/UX Iterations:**
+Started with colorful emoji-heavy design that overwhelmed seniors. Pivoted to clean white-first aesthetic with selective color only for guidance. Multiple font size adjustments to find the right balance (settled on 18px base).
+
+**6. Authentication Flow:**
+Duplicate sign-in buttons across pages confused users. Centralized auth to homepage only, simplifying the entire user experience.
+
+**7. Mobile Widget Blocking Buttons:**
+ElevenLabs widget covered action buttons on mobile. Resized widget in dashboard and adjusted positioning to fix UI conflicts.
+
+### 🎓 What We Learned
+**Technical Insights:**
+- ElevenLabs client tools are incredibly powerful for voice-first apps - they extract structured data from natural speech
+- Always use CDN package URLs (`unpkg.com`) for third-party widgets rather than direct domain links
+- Firebase Timestamp handling requires careful date conversion - never compare Date objects directly
+- Authentication state management should be centralized to avoid UX confusion
+
+**AI Integration:**
+- Combining ElevenLabs (conversational) with Gemini (analytical) creates a powerful duo - each AI handles what it does best
+- Gemini's `gemini-2.0-flash-001` model is perfect for generating personalized, empathetic fitness insights
+- Structured prompts with clear context (workout history, pain trends) produce much better AI responses
+
+**Design for Accessibility:**
+- Seniors prefer clean, uncluttered designs with generous white space over colorful, busy interfaces
+- Font size matters more than we thought - 18px base is the minimum, not a luxury
+- High contrast and large touch targets (56px+) make a huge difference in usability
+- Testing on actual mobile devices reveals issues that desktop responsive mode doesn't catch
+
+**Development Process:**
+- Start with accessibility requirements first, not as an afterthought
+- Progressive enhancement works - build core features that work without JavaScript, then enhance
+- Good documentation (like our EXERCISE_KNOWLEDGE.txt) helps both development and judges understand the project
+
+### 🚀 What's Next for PorchFitness
+**Immediate:**
+- Add more exercises (balance, breathing, coordination)
+- Goal-setting feature: "I want to do 3 workouts this week"
+- Shareable progress reports for healthcare providers
+
+**Growth:**
+- Multi-language support for diverse communities
+- Video demonstrations alongside images
+- iOS/Android native apps
+- Partner with senior centers and physical therapists
+
+We want PorchFitness to become the trusted platform for accessible exercise, helping people stay active and independent through the power of conversational AI.

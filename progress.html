@@ -82,9 +82,6 @@
         </a>
         <span id="userGreeting" class="text-2xl" style="color: var(--muted);"></span>
       </div>
-      <button id="authButton" style="background-color: var(--primary); color: white;" class="px-8 py-3 rounded-full font-medium text-lg hover:opacity-90 transition">
-        Sign In
-      </button>
     </div>
   </header>
 
@@ -178,11 +175,10 @@
 
   </main>
 
-  <script src="config.js"></script>
   <script>
     // Initialize Firebase
     if (!firebase.apps.length) {
-      firebase.initializeApp(window.firebaseConfig || {
+      firebase.initializeApp({
         apiKey: "AIzaSyC9zzKfkpYgo2Kwsxt1acyjsgtBYCI_WBs",
         authDomain: "porchfitness-98628.firebaseapp.com",
         projectId: "porchfitness-98628",
@@ -201,43 +197,23 @@
       return new Date(d.setDate(diff));
     }
 
-    // Auth button handler
-    const authButton = document.getElementById('authButton');
+    // Auth state handler
     const userGreeting = document.getElementById('userGreeting');
     
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         if (user.isAnonymous) {
-          authButton.textContent = 'Sign In';
-          userGreeting.textContent = '';
-          authButton.onclick = async () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            try {
-              await firebase.auth().signInWithPopup(provider);
-            } catch (error) {
-              console.error('Sign in error:', error);
-              alert('Sign in failed. Please try again.');
-            }
-          };
+          userGreeting.innerHTML = '<a href="index.html" style="color: var(--primary);">Sign in on home page to track progress</a>';
         } else {
           // User is signed in with Google
           const displayName = user.displayName || user.email || 'User';
           const firstName = displayName.split(' ')[0];
-          authButton.textContent = 'Sign Out';
           userGreeting.textContent = `Hi ${firstName}`;
-          authButton.onclick = async () => {
-            if (confirm(`Sign out ${displayName}?`)) {
-              await firebase.auth().signOut();
-              await firebase.auth().signInAnonymously();
-              window.location.reload();
-            }
-          };
           console.log('Signed in as:', displayName, 'UID:', user.uid);
         }
         await loadProgressData(user.uid);
       } else {
-        authButton.textContent = 'Sign In';
-        userGreeting.textContent = '';
+        userGreeting.innerHTML = '<a href="index.html" style="color: var(--primary);">Sign in on home page to track progress</a>';
         await firebase.auth().signInAnonymously();
       }
     });
@@ -265,11 +241,17 @@
         const weekStartTimestamp = firebase.firestore.Timestamp.fromDate(currentWeekStart);
         const weekEndTimestamp = firebase.firestore.Timestamp.fromDate(weekEnd);
         
-        // Update week display
-        document.getElementById('weekRange').textContent = 
-          `${currentWeekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} – ${weekEnd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+        // Update week display - always show the date range
+        const weekRangeText = `${currentWeekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} – ${weekEnd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+        document.getElementById('weekRange').textContent = weekRangeText;
         
-        console.log('Loading data for week:', currentWeekStart, 'to', weekEnd);
+        console.log('=== PROGRESS PAGE DEBUG ===');
+        console.log('Current week start:', currentWeekStart);
+        console.log('Week end:', weekEnd);
+        console.log('Week range display:', weekRangeText);
+        console.log('Querying user:', userId);
+        console.log('Start timestamp:', weekStartTimestamp.toDate());
+        console.log('End timestamp:', weekEndTimestamp.toDate());
         
         // Get sessions for this week
         const allSessions = await db.collection('users')
@@ -281,6 +263,11 @@
           .get();
 
         console.log('Found sessions:', allSessions.size);
+        if (allSessions.size > 0) {
+          allSessions.forEach(doc => {
+            console.log('Session:', doc.id, doc.data());
+          });
+        }
 
         const sessions = [];
         allSessions.forEach(doc => {
@@ -397,6 +384,22 @@
           <div class="text-right">
             <p class="font-semibold" style="color: var(--primary);">${Math.round(s.duration / 60)} min</p>
           </div>
+        </div>
+      `).join('');
+      
+      document.getElementById('recentActivity').innerHTML = html;
+    }
+
+    // Load data when page loads
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user.isAnonymous) {
+        userGreeting.innerHTML = '<a href="index.html">Sign in on home page to track progress</a>';
+      } else {
+        const firstName = user.displayName.split(' ')[0];
+        userGreeting.textContent = `Hi ${firstName}`;
+      }
+      await loadProgressData(user.uid);
+    });
   </script>
 </body>
 </html>
