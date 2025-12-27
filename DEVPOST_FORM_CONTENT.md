@@ -51,7 +51,7 @@ The app tracks workout history and pain patterns, then generates weekly progress
 
 - **Frontend**: Vanilla JavaScript with Tailwind CSS, designed for large text and high contrast (senior-accessible)
 - **Voice AI**: ElevenLabs Conversational AI with custom agent personality and client tools integration
-- **Intelligence**: Google Gemini 2.5 Flash for workout analysis, memory retrieval, and progress insights
+- **Intelligence**: Google Gemini 2.0 Flash for workout analysis, memory retrieval, and progress insights
 - **Backend**: Firebase Cloud Functions, Firestore for user data persistence, Firebase Authentication
 - **Architecture**: Client tools bridge ElevenLabs voice to Firebase/Gemini, enabling real-time workout logging and history retrieval during conversations
 
@@ -85,7 +85,7 @@ The app tracks workout history and pain patterns, then generates weekly progress
 ### What we learned
 
 - Voice-first design is fundamentally different from screen-first. Success meant letting go of visual confirmation and trusting the voice interaction.
-- Gemini 2.5 Flash is incredibly fast for real-time analysis. Workout history queries return in under 500ms.
+- Gemini 2.0 Flash is incredibly fast for real-time analysis. Workout history queries return in under 500ms.
 - Prompt engineering is everything with conversational AI. Samantha's personality evolved through 20+ iterations to find the right balance of encouraging without being patronizing.
 - Accessibility benefits everyone, not just seniors. The large, clear design tested well with all age groups.
 - Dual UX paths work: Some users love talking to Samantha, others just want quick manual logging. Supporting both increased adoption without adding complexity.
@@ -138,8 +138,8 @@ Lava Rock Labs (https://lavarocklabs.com)
 
 ## Video Demo Script (2-3 minutes)
 
-**Introduction (20 sec)**
-"Hi! I'm showing PorchFitness - voice-first exercise coaching for everyone. It uses ElevenLabs and Google Gemini to create an AI coach that remembers your progress."
+**Introduction (40 sec)**
+"Hi! I'm exciting to share PorchFitness with you. Porch Fitness includes chair-based exercises designed for anyone, but especially great for seniors and people with limited mobility or balance challenges. Meet Samantha - she's a senior fitness coach and an ElevenLabs Conversational AI agent who guides you through the entire experience with her natural voice. Behind the scenes, Google Gemini API analyzes your workout history, detects pain patterns, and generates personalized insights. It's a truly voice-driven experience - no screen required. Let me show you."
 
 **Show Homepage (15 sec)**
 [Screen: porchfitness.com]
@@ -181,6 +181,81 @@ Lava Rock Labs (https://lavarocklabs.com)
 
 **Closing (20 sec)**
 "This shows true AI partnership - ElevenLabs provides voice and personality, Gemini provides intelligence and insights. Together they create a coach that learns and adapts. Thanks for watching!"
+
+---
+
+## YouTube Video Metadata
+
+### Video Title (100 chars max)
+PorchFitness - Voice AI Fitness Coach | ElevenLabs + Google Gemini Challenge
+
+### Video Description
+```
+PorchFitness: Voice-First AI Fitness Coaching for Everyone
+
+Built for the ElevenLabs Challenge, PorchFitness combines ElevenLabs Conversational AI with Google Gemini API to create Samantha - a senior fitness coach who guides users through chair-based exercises entirely by voice.
+
+🎯 Key Features:
+• 15 gentle exercises (12 seated, 3 standing)
+• Natural voice coaching with ElevenLabs AI
+• AI-powered workout analysis with Google Gemini
+• Pain tracking and personalized insights
+• Weekly progress summaries
+• Multilingual support (English, Spanish, French)
+
+⏱️ Timestamps:
+0:00 - Introduction & Challenge Overview
+0:40 - Homepage Tour
+0:55 - Google Sign-In
+1:05 - Choosing an Exercise
+1:25 - Voice Coaching with Samantha
+2:25 - Manual Logging Option
+2:45 - Progress Tracking Charts
+3:10 - AI-Generated Weekly Summary
+3:40 - Closing Thoughts
+
+🔗 Try It Live: https://porchfitness.com
+📊 Progress Dashboard: https://porchfitness.com/progress.html
+📈 Weekly Summary: https://porchfitness.com/weekly-summary.html
+💻 GitHub: https://github.com/Anety5/porchfitness
+
+🛠️ Built With:
+• ElevenLabs Conversational AI
+• Google Gemini 2.0 Flash API
+• Firebase (Hosting, Functions, Firestore, Auth)
+• Vanilla JavaScript + Tailwind CSS
+• Chart.js for data visualization
+
+♿ Designed for accessibility with large fonts, high contrast, and voice-first interaction - perfect for seniors and anyone with limited mobility.
+
+🏆 Submitted to: ElevenLabs + Google Cloud AI Challenge
+
+---
+
+Made with ❤️ by Lava Rock Labs
+https://lavarocklabs.com
+
+#ElevenLabs #GoogleGemini #AI #VoiceAI #Accessibility #Healthcare #SeniorFitness #ConversationalAI #Firebase #PWA
+```
+
+### Video Tags (Copy-paste)
+```
+ElevenLabs, Google Gemini, conversational ai, voice ai, senior fitness, accessibility, healthcare technology, firebase, ai challenge, physical therapy, workout tracker, ElevenLabs agent, voice first, fitness app, pwa
+```
+
+### Category
+Science & Technology
+
+### Thumbnail Suggestions
+**Option 1:** Screenshot of Samantha widget with text overlay "Voice AI Fitness Coach"
+**Option 2:** Split screen: Samantha on left, weekly summary chart on right
+**Option 3:** Text-based with icons: "ElevenLabs + Gemini" logos with "Voice-First Fitness" headline
+
+### Playlist Suggestions
+- ElevenLabs Challenge Submissions
+- AI Projects 2025
+- Healthcare Technology
+- Voice AI Applications
 
 ---
 

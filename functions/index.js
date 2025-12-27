@@ -102,7 +102,7 @@ Keep it friendly, concise, and encouraging in the user's language.`;
 
         const response = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/` +
-            `models/gemini-pro:generateContent?key=${apiKey}`,
+            `models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`,
             {
               method: "POST",
               headers: {"Content-Type": "application/json"},
@@ -335,7 +335,7 @@ ${workoutList}
 
         const response = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/` +
-            `models/gemini-pro:generateContent?key=${apiKey}`,
+            `models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`,
             {
               method: "POST",
               headers: {"Content-Type": "application/json"},
