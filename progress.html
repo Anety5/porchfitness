@@ -257,22 +257,30 @@
       try {
         const db = firebase.firestore();
         
-        // Calculate week range
+        // Calculate week range - convert to Firestore Timestamps
         const weekEnd = new Date(currentWeekStart);
         weekEnd.setDate(weekEnd.getDate() + 6);
+        weekEnd.setHours(23, 59, 59, 999); // End of day
+        
+        const weekStartTimestamp = firebase.firestore.Timestamp.fromDate(currentWeekStart);
+        const weekEndTimestamp = firebase.firestore.Timestamp.fromDate(weekEnd);
         
         // Update week display
         document.getElementById('weekRange').textContent = 
           `${currentWeekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} – ${weekEnd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
         
+        console.log('Loading data for week:', currentWeekStart, 'to', weekEnd);
+        
         // Get sessions for this week
         const allSessions = await db.collection('users')
           .doc(userId)
           .collection('sessions')
-          .where('date', '>=', currentWeekStart)
-          .where('date', '<=', weekEnd)
+          .where('date', '>=', weekStartTimestamp)
+          .where('date', '<=', weekEndTimestamp)
           .orderBy('date', 'desc')
           .get();
+
+        console.log('Found sessions:', allSessions.size);
 
         const sessions = [];
         allSessions.forEach(doc => {
