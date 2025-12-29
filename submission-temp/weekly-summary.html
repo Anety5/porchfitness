@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Summary - PorchFitness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F7F8FA;
+            --surface: #FFFFFF;
+            --primary: #4A6EDB;
+            --accent: #6FA8A1;
+            --text: #1F2937;
+            --muted: #6B7280;
+        }
+        body { 
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            background-color: var(--bg) !important;
+        }
+        .stat-card {
+            background: var(--surface);
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: box-shadow 0.2s;
+        }
+        .stat-card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav style="background-color: var(--surface); border-bottom: 1px solid rgba(0,0,0,0.06);" class="shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-3xl font-bold" style="color: var(--primary);">PorchFitness</a>
+                <div class="flex gap-6">
+                    <a href="index.html" class="text-xl hover:opacity-70 transition" style="color: var(--muted);">Home</a>
+                    <a href="progress.html" class="text-xl hover:opacity-70 transition" style="color: var(--muted);">Progress</a>
+                    <a href="weekly-summary.html" class="text-xl font-semibold" style="color: var(--primary);">Weekly Summary</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-6 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-6xl font-bold mb-6" style="color: var(--text);">Your Weekly Summary</h1>
+            <p class="text-3xl" style="color: var(--muted);">AI-powered insights into your progress</p>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-2" style="border-color: var(--primary);"></div>
+            <p class="mt-4 text-2xl" style="color: var(--muted);">Generating your personalized summary...</p>
+        </div>
+
+        <!-- Summary Content (Hidden Initially) -->
+        <div id="summaryContent" class="hidden space-y-8">
+            <!-- AI-Generated Message Card -->
+            <div class="bg-white rounded-2xl shadow-sm p-10 mb-12">
+                <div class="mb-6">
+                    <h2 class="text-4xl font-bold mb-3" style="color: var(--text);">Samantha's Message</h2>
+                    <p class="text-xl" style="color: var(--muted);">Powered by Google Gemini AI</p>
+                </div>
+                <div id="aiMessage" class="text-2xl leading-relaxed" style="color: var(--text);">
+                    <!-- AI-generated message will appear here -->
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                <div class="stat-card p-8 text-center">
+                    <div class="text-5xl font-bold mb-3" style="color: var(--primary);" id="totalWorkouts">0</div>
+                    <div class="text-xl" style="color: var(--muted);">Workouts</div>
+                </div>
+                <div class="stat-card p-8 text-center">
+                    <div class="text-5xl font-bold mb-3" style="color: var(--accent);" id="avgPain">0</div>
+                    <div class="text-xl" style="color: var(--muted);">Avg Pain</div>
+                </div>
+                <div class="stat-card p-8 text-center">
+                    <div class="text-5xl font-bold mb-3" style="color: var(--primary);" id="totalMinutes">0</div>
+                    <div class="text-xl" style="color: var(--muted);">Minutes</div>
+                </div>
+                <div class="stat-card p-8 text-center">
+                    <div class="text-5xl font-bold mb-3" style="color: var(--accent);" id="streak">0</div>
+                    <div class="text-xl" style="color: var(--muted);">Day Streak</div>
+                </div>
+            </div>
+
+            <!-- Workout Details Table -->
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden mb-12">
+                <div class="px-8 py-6" style="background-color: var(--bg); border-bottom: 1px solid rgba(0,0,0,0.06);">
+                    <h3 class="text-3xl font-bold" style="color: var(--text);">This Week's Workouts</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead style="background-color: var(--bg);">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xl font-semibold" style="color: var(--text);">Date</th>
+                                <th class="px-6 py-4 text-left text-xl font-semibold" style="color: var(--text);">Exercise</th>
+                                <th class="px-6 py-4 text-left text-xl font-semibold" style="color: var(--text);">Pain</th>
+                                <th class="px-6 py-4 text-left text-xl font-semibold" style="color: var(--text);">Duration</th>
+                                <th class="px-6 py-4 text-left text-xl font-semibold" style="color: var(--text);">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="workoutTable" class="divide-y divide-gray-200">
+                            <!-- Workouts will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-4 justify-center">
+                <a href="progress.html" class="text-white px-10 py-4 rounded-lg text-xl font-semibold hover:opacity-90 transition" style="background-color: var(--primary);">
+                    View Detailed Progress
+                </a>
+                <a href="index.html" class="text-white px-10 py-4 rounded-lg text-xl font-semibold hover:opacity-90 transition" style="background-color: var(--accent);">
+                    Back to Exercises
+                </a>
+            </div>
+        </div>
+
+        <!-- No Data State -->
+        <div id="noData" class="hidden text-center py-12">
+            <h2 class="text-4xl font-bold mb-6" style="color: var(--text);">No Workouts Yet</h2>
+            <p class="text-2xl mb-8" style="color: var(--muted);">Complete some exercises to see your weekly summary!</p>
+            <a href="index.html" class="text-white px-10 py-4 rounded-lg text-xl font-semibold hover:opacity-90 transition inline-block" style="background-color: var(--primary);">
+                Start Your First Workout
+            </a>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { getFirestore, collection, query, where, orderBy, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+        import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC9zzKfkpYgo2Kwsxt1acyjsgtBYCI_WBs",
+            authDomain: "porchfitness-98628.firebaseapp.com",
+            projectId: "porchfitness-98628",
+            storageBucket: "porchfitness-98628.firebasestorage.app",
+            messagingSenderId: "115728465210",
+            appId: "1:115728465210:web:2fb384f71a8c626faea403"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const functions = getFunctions(app);
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                // Show message that sign-in is required
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('noData').classList.remove('hidden');
+                document.querySelector('#noData h2').textContent = 'Sign In Required';
+                document.querySelector('#noData p').textContent = 'Please sign in from the home page to view your weekly summary and track your progress.';
+                return;
+            }
+
+            await loadWeeklySummary(user.uid);
+        });
+
+        async function loadWeeklySummary(userId) {
+            try {
+                // Get workouts from last 7 days
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+                const sessionsRef = collection(db, 'users', userId, 'sessions');
+                const q = query(
+                    sessionsRef,
+                    where('date', '>=', sevenDaysAgo),
+                    orderBy('date', 'desc')
+                );
+
+                const snapshot = await getDocs(q);
+                const workouts = [];
+                snapshot.forEach(doc => {
+                    workouts.push({ id: doc.id, ...doc.data() });
+                });
+
+                if (workouts.length === 0) {
+                    document.getElementById('loading').classList.add('hidden');
+                    document.getElementById('noData').classList.remove('hidden');
+                    return;
+                }
+
+                // Calculate stats
+                const totalWorkouts = workouts.length;
+                const avgPain = (workouts.reduce((sum, w) => sum + (w.painLevel || 0), 0) / totalWorkouts).toFixed(1);
+                const totalMinutes = Math.round(workouts.reduce((sum, w) => sum + (w.durationSeconds || 0), 0) / 60);
+                
+                // Calculate streak (simplified)
+                const streak = calculateStreak(workouts);
+
+                // Update stats cards
+                document.getElementById('totalWorkouts').textContent = totalWorkouts;
+                document.getElementById('avgPain').textContent = avgPain;
+                document.getElementById('totalMinutes').textContent = totalMinutes;
+                document.getElementById('streak').textContent = streak;
+
+                // Populate table
+                const tableBody = document.getElementById('workoutTable');
+                workouts.forEach(workout => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-gray-50 border-b border-gray-100';
+                    
+                    const date = workout.date?.toDate ? workout.date.toDate() : new Date(workout.date);
+                    const painColor = workout.painLevel <= 3 ? 'color: #10B981;' : workout.painLevel <= 6 ? 'color: #F59E0B;' : 'color: #EF4444;';
+                    
+                    row.innerHTML = `
+                        <td class="px-6 py-4 text-xl" style="color: var(--muted);">${date.toLocaleDateString()}</td>
+                        <td class="px-6 py-4 text-xl font-medium" style="color: var(--text);">${workout.exerciseName}</td>
+                        <td class="px-6 py-4 text-xl font-semibold" style="${painColor}">${workout.painLevel || 'N/A'}/10</td>
+                        <td class="px-6 py-4 text-xl" style="color: var(--muted);">${Math.round((workout.durationSeconds || 0) / 60)}m</td>
+                        <td class="px-6 py-4 text-xl" style="color: var(--muted);">${workout.notes || '-'}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+                // Call Firebase Function for AI summary
+                console.log('Calling getWeeklySummary function for user:', userId);
+                try {
+                    const response = await fetch('https://us-central1-porchfitness-98628.cloudfunctions.net/getWeeklySummary', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ userId: userId })
+                    });
+
+                    console.log('Response status:', response.status);
+                    
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('Function error:', errorText);
+                        throw new Error(`Failed to generate AI summary: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    console.log('AI Summary result:', result);
+                    
+                    if (result.summary) {
+                        document.getElementById('aiMessage').textContent = result.summary;
+                    } else {
+                        // Fallback message if no summary generated
+                        document.getElementById('aiMessage').textContent = `Great work this week! You completed ${workouts.length} workout${workouts.length !== 1 ? 's' : ''} and are building a consistent fitness routine. Keep up the excellent progress! Remember to listen to your body and celebrate every movement. You're doing amazing! 💪`;
+                    }
+                } catch (summaryError) {
+                    console.error('Error fetching AI summary:', summaryError);
+                    // Show a nice fallback message
+                    document.getElementById('aiMessage').textContent = `Wonderful progress this week! You completed ${workouts.length} workout${workouts.length !== 1 ? 's' : ''} and stayed active. Every exercise brings you closer to your wellness goals. Keep moving, keep improving! 🌟`;
+                }
+
+                // Show content
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('summaryContent').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error loading summary:', error);
+                document.getElementById('loading').innerHTML = `
+                    <div class="text-red-600">
+                        <p class="text-xl font-bold mb-2">Error loading summary</p>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function calculateStreak(workouts) {
+            // Simple streak calculation: consecutive days with workouts
+            const dates = [...new Set(workouts.map(w => {
+                const d = w.date?.toDate ? w.date.toDate() : new Date(w.date);
+                return d.toDateString();
+            }))];
+            
+            dates.sort((a, b) => new Date(b) - new Date(a));
+            
+            let streak = 0;
+            let expectedDate = new Date();
+            
+            for (const dateStr of dates) {
+                const workoutDate = new Date(dateStr);
+                const daysDiff = Math.floor((expectedDate - workoutDate) / (1000 * 60 * 60 * 24));
+                
+                if (daysDiff <= 1) {
+                    streak++;
+                    expectedDate = workoutDate;
+                } else {
+                    break;
+                }
+            }
+            
+            return streak;
+        }
+    </script>
+
+  <!-- ElevenLabs Conversational AI Widget - Samantha -->
+  <elevenlabs-convai agent-id="agent_1501kd4t27ftf2br1c7p1tm53kjg"></elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+</body>
+</html>

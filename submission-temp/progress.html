@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Progress - PorchFitness</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  
+  <style>
+    :root {
+      --bg: #F7F8FA;
+      --surface: #FFFFFF;
+      --primary: #4A6EDB;
+      --accent: #6FA8A1;
+      --text: #1F2937;
+      --muted: #6B7280;
+    }
+    
+    body { 
+      font-size: 20px;
+      background-color: var(--bg) !important;
+    }
+    
+    .stat-card {
+      background: var(--surface);
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: all 0.2s ease;
+    }
+    
+    .stat-card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      height: 200px;
+      padding: 20px 0;
+    }
+    
+    .bar {
+      flex: 1;
+      background: var(--primary);
+      border-radius: 8px 8px 0 0;
+      min-height: 4px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .bar.best {
+      background: var(--accent);
+    }
+    
+    .bar:hover {
+      opacity: 0.8;
+      transform: translateY(-4px);
+    }
+    
+    .insight-card {
+      background: var(--surface);
+      border-radius: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      padding: 1.5rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen"
+
+  <!-- Minimal Header -->
+  <header style="background-color: var(--surface); border-bottom: 1px solid rgba(0,0,0,0.06);" class="shadow-sm sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <a href="index.html" style="color: var(--text);" class="text-3xl font-semibold hover:opacity-70 transition">
+          ← Back to Exercises
+        </a>
+        <span id="userGreeting" class="text-2xl" style="color: var(--muted);"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-12">
+
+    <!-- Page Title -->
+    <div class="mb-8">
+      <h1 class="text-5xl font-bold mb-3" style="color: var(--text);">My Progress</h1>
+      <p class="text-2xl" style="color: var(--muted);">Track your fitness journey</p>
+    </div>
+
+    <!-- Week Selector -->
+    <div class="flex items-center justify-between mb-8 bg-white rounded-2xl shadow-sm p-6">
+      <button id="prevWeek" class="p-4 hover:bg-gray-100 rounded-lg transition" aria-label="Previous week">
+        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <div class="text-center">
+        <p id="weekRange" class="text-2xl font-semibold" style="color: var(--text);">Loading...</p>
+      </div>
+      <button id="nextWeek" class="p-4 hover:bg-gray-100 rounded-lg transition" aria-label="Next week">
+        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="stat-card p-8">
+        <p class="text-lg font-medium mb-3" style="color: var(--muted);">Workouts Completed</p>
+        <p id="totalWorkouts" class="text-6xl font-bold" style="color: var(--primary);">0</p>
+      </div>
+
+      <div class="stat-card p-8">
+        <p class="text-lg font-medium mb-3" style="color: var(--muted);">Total Minutes</p>
+        <p id="totalMinutes" class="text-6xl font-bold" style="color: var(--accent);">0</p>
+      </div>
+
+      <div class="stat-card p-8">
+        <p class="text-lg font-medium mb-3" style="color: var(--muted);">Active Days</p>
+        <p id="activeDays" class="text-6xl font-bold" style="color: var(--primary);">0</p>
+      </div>
+    </div>
+
+    <!-- Weekly Activity Chart -->
+    <div class="bg-white rounded-2xl shadow-sm p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6" style="color: var(--text);">Weekly Activity</h2>
+      <div id="weeklyChart" class="bar-chart"></div>
+      <div class="flex justify-between mt-4 text-lg font-medium" style="color: var(--muted);" id="dayLabels">
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+        <span>Sun</span>
+      </div>
+    </div>
+
+    <!-- Insights -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="insight-card">
+        <h3 class="text-xl font-semibold mb-3" style="color: var(--text);">Best Day</h3>
+        <p id="bestDay" class="text-3xl font-bold" style="color: var(--primary);">-</p>
+        <p class="text-lg mt-2" style="color: var(--muted);" id="bestDayDetail">Complete a workout to see</p>
+      </div>
+
+      <div class="insight-card">
+        <h3 class="text-xl font-semibold mb-3" style="color: var(--text);">Most Practiced</h3>
+        <p id="topCategory" class="text-3xl font-bold" style="color: var(--accent);">-</p>
+        <p class="text-lg mt-2" style="color: var(--muted);" id="topCategoryDetail">Exercise category</p>
+      </div>
+
+      <div class="insight-card">
+        <h3 class="text-xl font-semibold mb-3" style="color: var(--text);">Next Goal</h3>
+        <p id="nextGoal" class="text-3xl font-bold" style="color: var(--primary);">-</p>
+        <p class="text-lg mt-2" style="color: var(--muted);">Keep going!</p>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="bg-white rounded-2xl shadow-sm p-8">
+      <h2 class="text-3xl font-bold mb-6" style="color: var(--text);">Recent Activity</h2>
+      <div id="recentActivity" class="space-y-4">
+        <p class="text-xl" style="color: var(--muted);">Loading...</p>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp({
+        apiKey: "AIzaSyC9zzKfkpYgo2Kwsxt1acyjsgtBYCI_WBs",
+        authDomain: "porchfitness-98628.firebaseapp.com",
+        projectId: "porchfitness-98628",
+        storageBucket: "porchfitness-98628.firebasestorage.app",
+        messagingSenderId: "115728465210",
+        appId: "1:115728465210:web:2fb384f71a8c626faea403"
+      });
+    }
+
+    let currentWeekStart = getMonday(new Date());
+
+    function getMonday(date) {
+      const d = new Date(date);
+      const day = d.getDay();
+      const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+      return new Date(d.setDate(diff));
+    }
+
+    // Auth state handler
+    const userGreeting = document.getElementById('userGreeting');
+    
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        if (user.isAnonymous) {
+          userGreeting.innerHTML = '<a href="index.html" style="color: var(--primary);">Sign in on home page to track progress</a>';
+        } else {
+          // User is signed in with Google
+          const displayName = user.displayName || user.email || 'User';
+          const firstName = displayName.split(' ')[0];
+          userGreeting.textContent = `Hi ${firstName}`;
+          console.log('Signed in as:', displayName, 'UID:', user.uid);
+        }
+        await loadProgressData(user.uid);
+      } else {
+        userGreeting.innerHTML = '<a href="index.html" style="color: var(--primary);">Sign in on home page to track progress</a>';
+        await firebase.auth().signInAnonymously();
+      }
+    });
+
+    // Week navigation
+    document.getElementById('prevWeek').onclick = () => {
+      currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+      loadProgressData(firebase.auth().currentUser.uid);
+    };
+
+    document.getElementById('nextWeek').onclick = () => {
+      currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+      loadProgressData(firebase.auth().currentUser.uid);
+    };
+
+    async function loadProgressData(userId) {
+      try {
+        const db = firebase.firestore();
+        
+        // Calculate week range - convert to Firestore Timestamps
+        const weekEnd = new Date(currentWeekStart);
+        weekEnd.setDate(weekEnd.getDate() + 6);
+        weekEnd.setHours(23, 59, 59, 999); // End of day
+        
+        const weekStartTimestamp = firebase.firestore.Timestamp.fromDate(currentWeekStart);
+        const weekEndTimestamp = firebase.firestore.Timestamp.fromDate(weekEnd);
+        
+        // Update week display - always show the date range
+        const weekRangeText = `${currentWeekStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} – ${weekEnd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+        document.getElementById('weekRange').textContent = weekRangeText;
+        
+        console.log('=== PROGRESS PAGE DEBUG ===');
+        console.log('Current week start:', currentWeekStart);
+        console.log('Week end:', weekEnd);
+        console.log('Week range display:', weekRangeText);
+        console.log('Querying user:', userId);
+        console.log('Start timestamp:', weekStartTimestamp.toDate());
+        console.log('End timestamp:', weekEndTimestamp.toDate());
+        
+        // Get sessions for this week
+        const allSessions = await db.collection('users')
+          .doc(userId)
+          .collection('sessions')
+          .where('date', '>=', weekStartTimestamp)
+          .where('date', '<=', weekEndTimestamp)
+          .orderBy('date', 'desc')
+          .get();
+
+        console.log('Found sessions:', allSessions.size);
+        if (allSessions.size > 0) {
+          allSessions.forEach(doc => {
+            console.log('Session:', doc.id, doc.data());
+          });
+        }
+
+        const sessions = [];
+        allSessions.forEach(doc => {
+          const data = doc.data();
+          sessions.push({
+            exercise: data.exerciseName,
+            category: data.category || 'General',
+            duration: data.durationSeconds || 180,
+            date: data.date.toDate()
+          });
+        });
+
+        // Calculate weekly stats
+        const totalWorkouts = sessions.length;
+        const totalMinutes = Math.round(sessions.reduce((sum, s) => sum + s.duration, 0) / 60);
+        const activeDays = new Set(sessions.map(s => s.date.toDateString())).size;
+
+        // Update stats
+        document.getElementById('totalWorkouts').textContent = totalWorkouts;
+        document.getElementById('totalMinutes').textContent = totalMinutes;
+        document.getElementById('activeDays').textContent = activeDays;
+
+        // Create daily breakdown
+        const dailyMinutes = [0, 0, 0, 0, 0, 0, 0];
+        sessions.forEach(s => {
+          const dayOfWeek = (s.date.getDay() + 6) % 7; // Monday = 0
+          dailyMinutes[dayOfWeek] += s.duration / 60;
+        });
+
+        renderWeeklyChart(dailyMinutes);
+
+        // Calculate insights
+        const bestDayIndex = dailyMinutes.indexOf(Math.max(...dailyMinutes));
+        const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        
+        if (totalWorkouts > 0) {
+          document.getElementById('bestDay').textContent = dayNames[bestDayIndex];
+          document.getElementById('bestDayDetail').textContent = 
+            `${Math.round(dailyMinutes[bestDayIndex])} minutes`;
+        }
+
+        // Most practiced category
+        const categoryCounts = {};
+        sessions.forEach(s => {
+          categoryCounts[s.category] = (categoryCounts[s.category] || 0) + 1;
+        });
+        const topCat = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1])[0];
+        if (topCat) {
+          document.getElementById('topCategory').textContent = topCat[0];
+          document.getElementById('topCategoryDetail').textContent = `${topCat[1]} workouts`;
+        }
+
+        // Next goal
+        const nextGoals = [
+          { threshold: 7, text: '7 workouts this week', emoji: '🎯' },
+          { threshold: 5, text: '5 workouts this week', emoji: '⭐' },
+          { threshold: 3, text: '3 workouts this week', emoji: '💪' },
+        ];
+        const goal = nextGoals.find(g => totalWorkouts < g.threshold);
+        if (goal) {
+          document.getElementById('nextGoal').textContent = `${totalWorkouts} / ${goal.threshold}`;
+        } else {
+          document.getElementById('nextGoal').textContent = 'Crushing it! 🔥';
+        }
+
+        // Display recent activity
+        displayRecentActivity(sessions);
+
+      } catch (error) {
+        console.error('Error loading progress:', error);
+      }
+    }
+
+    function renderWeeklyChart(dailyMinutes) {
+      const maxMinutes = Math.max(...dailyMinutes, 1);
+      const bestDayIndex = dailyMinutes.indexOf(Math.max(...dailyMinutes));
+      
+      const html = dailyMinutes.map((minutes, index) => {
+        const height = (minutes / maxMinutes) * 100;
+        const isBest = index === bestDayIndex && minutes > 0;
+        return `
+          <div class="bar ${isBest ? 'best' : ''}" 
+               style="height: ${height}%;" 
+               title="${Math.round(minutes)} min">
+            <div style="position: absolute; top: -24px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 600; color: var(--text);">
+              ${Math.round(minutes) > 0 ? Math.round(minutes) : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      document.getElementById('weeklyChart').innerHTML = html;
+    }
+
+    function displayRecentActivity(sessions) {
+      if (sessions.length === 0) {
+        document.getElementById('recentActivity').innerHTML = `
+          <div class="text-center py-8">
+            <p class="text-xl mb-4" style="color: var(--muted);">No workouts this week yet</p>
+            <a href="index.html" style="background-color: var(--primary);" class="inline-block px-8 py-3 rounded-full text-white font-semibold hover:opacity-90 transition">
+              Start Your First Workout
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      const html = sessions.slice(0, 10).map(s => `
+        <div class="flex justify-between items-center py-3 border-b border-gray-100">
+          <div>
+            <p class="font-semibold" style="color: var(--text);">${s.exercise}</p>
+            <p class="text-sm" style="color: var(--muted);">${s.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}</p>
+          </div>
+          <div class="text-right">
+            <p class="font-semibold" style="color: var(--primary);">${Math.round(s.duration / 60)} min</p>
+          </div>
+        </div>
+      `).join('');
+      
+      document.getElementById('recentActivity').innerHTML = html;
+    }
+
+    // Load data when page loads
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user.isAnonymous) {
+        userGreeting.innerHTML = '<a href="index.html">Sign in on home page to track progress</a>';
+      } else {
+        const firstName = user.displayName.split(' ')[0];
+        userGreeting.textContent = `Hi ${firstName}`;
+      }
+      await loadProgressData(user.uid);
+    });
+  </script>
+</body>
+</html>

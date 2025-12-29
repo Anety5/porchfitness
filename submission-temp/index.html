@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PorchFitness - 15 Gentle Exercises with AI Coach</title>
+  <meta name="description" content="15 gentle exercises including chair and standing exercises. Get AI-powered voice coaching and step-by-step guidance. Perfect for seniors.">
+
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#667eea">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PorchFitness">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" href="/images/icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/images/icon-512.png">
+  <link rel="apple-touch-icon" href="/images/icon-192.png">
+  <link rel="shortcut icon" type="image/png" href="/images/icon-192.png">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <!-- Custom Styles -->
+  <style>
+    /* Luxury Wellness Design System */
+    :root {
+      --bg: #F7F8FA;
+      --surface: #FFFFFF;
+      --header: #2E3F5F;
+      --primary: #4A6EDB;
+      --accent: #6FA8A1;
+      --text: #1F2937;
+      --muted: #6B7280;
+    }
+    
+    /* Base font sizing for accessibility */
+    html {
+      font-size: 18px; /* Larger base for seniors */
+    }
+    
+    /* High contrast, accessible design */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      line-height: 1.6;
+      background-color: var(--bg) !important;
+      padding-bottom: 140px; /* Space for sticky bottom actions */
+    }
+    
+    /* Exercise cards - clean luxury design */
+    .exercise-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: none;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+    .exercise-card:hover, .exercise-card:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    .exercise-card img {
+      object-fit: contain !important;
+      height: 220px;
+      width: 100%;
+      background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+    }
+    .exercise-card h3 {
+      font-size: 1.25rem !important; /* 22px */
+      font-weight: 700 !important;
+      color: var(--text) !important;
+    }
+    .exercise-card .meta {
+      font-size: 1.1rem !important; /* 20px - larger for readability */
+      color: var(--muted) !important;
+    }
+    .exercise-card button {
+      font-size: 1rem !important;
+      padding: 0.875rem 1.5rem !important;
+      font-weight: 600 !important;
+      background-color: var(--primary) !important;
+      color: white !important;
+      border: none !important;
+      border-radius: 12px !important;
+      transition: all 0.2s ease !important;
+    }
+    .exercise-card button:hover {
+      background-color: #3B5AC7 !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(74, 110, 219, 0.2);
+    }
+    
+    /* Section headings */
+    .section-heading {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Sticky bottom actions */
+    .bottom-actions {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 1rem;
+      z-index: 30;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
+    }
+    
+    /* Buttons - minimum 44px touch target */
+    .btn-primary {
+      min-height: 56px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+    }
+    
+    /* Focus indicators for keyboard navigation */
+    *:focus {
+      outline: 4px solid #2563eb;
+      outline-offset: 2px;
+    }
+    
+    /* Skip to main content for screen readers */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: #000;
+      color: #fff;
+      padding: 8px;
+      text-decoration: none;
+      z-index: 100;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+    
+    /* Style ElevenLabs attribution to be more visible */
+    elevenlabs-convai::part(powered-by) {
+      color: #94a3b8 !important;
+      opacity: 1 !important;
+    }
+    
+    /* Mobile: Add spacing for ElevenLabs widget and bottom actions */
+    @media (max-width: 768px) {
+      elevenlabs-convai {
+        bottom: 90px !important;
+      }
+      body {
+        padding-bottom: 160px;
+      }
+      .bottom-actions {
+        padding: 0.5rem;
+      }
+      .bottom-actions a {
+        font-size: 0.95rem !important;
+        padding: 0.6rem 1.2rem !important;
+      }
+    }
+    @media (min-width: 769px) {
+      elevenlabs-convai {
+        bottom: 100px !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white min-h-screen">
+
+  <!-- Skip Navigation for Screen Readers -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Minimal Header -->
+  <header style="background-color: var(--surface); border-bottom: 1px solid #E5E7EB;" class="shadow-sm sticky top-0 z-40" role="banner">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/images/icon-192.png" alt="PorchFitness Logo" class="w-12 h-12 rounded-lg">
+        <span class="text-3xl font-medium" style="color: var(--text);" id="userGreeting">Hi there</span>
+      </div>
+      <button id="googleSignInBtn" style="background-color: var(--primary); color: white;" class="px-8 py-3 rounded-full font-medium text-xl hover:opacity-90 transition flex items-center gap-2">
+        <svg width="18" height="18" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        <span id="signInText">Sign In</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="py-8 px-6" role="region" aria-label="Welcome section" style="background: linear-gradient(135deg, #2E5090 0%, #4A6EDB 100%);">
+    <div class="max-w-7xl mx-auto flex items-center gap-6">
+      <img src="/images/icon-192.png" alt="PorchFitness Logo" class="w-20 h-20 md:w-24 md:h-24 rounded-xl">
+      <div>
+        <h1 class="text-3xl md:text-5xl font-bold text-white mb-1">
+          PorchFitness
+        </h1>
+        <p class="text-xl md:text-2xl text-blue-100 mb-1">
+          Voice-Coached Gentle Exercises
+        </p>
+        <p class="text-base md:text-lg text-blue-200">
+          Built for Anyone • Great for Seniors
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main id="main-content" class="max-w-7xl mx-auto px-6 py-12" role="main" style="background-color: var(--bg);">
+
+    <!-- Section 1: Morning Mobility -->
+    <section class="mb-16">
+      <h2 class="section-heading">Morning Mobility</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+
+      <!-- Neck Stretches -->
+      <article class="exercise-card cursor-pointer"
+               role="listitem"
+               tabindex="0"
+               aria-label="Seated Neck Stretches"
+               onclick="openExerciseDetail('Seated Neck Stretches')">
+        <img src="images/seated-neck-stretches.jpg"
+             alt="Seated Neck Stretches"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          💆
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Neck Stretches</h3>
+          <p class="meta mb-4">Seated • Neck • Flexibility</p>
+          <button onclick="event.stopPropagation(); logWorkout('Seated Neck Stretches')" class="w-full rounded-lg">
+           Start Exercise
+          </button>
+        </div>
+      </article>
+
+      <!-- Shoulder Rolls -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Seated Shoulder Rolls')">
+        <img src="images/seated-shoulder-rolls.jpg"
+             alt="Seated Shoulder Rolls"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🔄
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Shoulder Rolls</h3>
+          <p class="meta mb-4">Seated • Shoulders • Mobility</p>
+          <button onclick="event.stopPropagation(); logWorkout('Seated Shoulder Rolls')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      <!-- Ankle Circles -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Seated Ankle Circles')">
+        <img src="images/seated-ankle-circles.jpg"
+             alt="Seated Ankle Circles"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🦶
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Ankle Circles</h3>
+          <p class="meta mb-4">Seated • Ankles • Mobility</p>
+          <button onclick="event.stopPropagation(); logWorkout('Seated Ankle Circles')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      </div>
+    </section>
+
+    <!-- Section 2: Back & Core -->
+    <section class="mb-12">
+      <h2 class="section-heading">Back & Core</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+
+      <!-- Cat-Cow -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Seated Cat-Cow')">
+        <img src="images/seated-cat-cow.jpg"
+             alt="Seated Cat-Cow"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🐱
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Cat-Cow Stretch</h3>
+          <p class="meta mb-4">Seated • Back • Flexibility</p>
+          <button onclick="event.stopPropagation(); logWorkout('Seated Cat-Cow')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      <!-- Spinal Twist -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Seated Spinal Twist')">
+        <img src="images/seated-spinal-twist.jpg"
+             alt="Seated Spinal Twist"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🔄
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Spinal Twist</h3>
+          <p class="meta mb-4">Seated • Spine • Flexibility</p>
+          <button onclick="event.stopPropagation(); logWorkout('Seated Spinal Twist')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      <!-- Side Bends -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Seated Side Bends')">
+        <img src="images/seated-side-bends.jpg"
+             alt="Seated Side Bends"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🤸
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Side Bends</h3>
+          <p class="meta mb-4">Seated • Core • Flexibility</p>
+          <button onclick="event.stopPropagation(); logWorkout('Seated Side Bends')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      </div>
+    </section>
+
+    <!-- Section 3: Legs & Hips -->
+    <section class="mb-12">
+      <h2 class="section-heading">Legs & Hips</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+
+      <!-- Hamstring Stretch -->
+      <article class="exercise-card cursor-pointer"
+               role="listitem"
+               tabindex="0"
+               aria-label="Seated Hamstring Stretch"
+               onclick="openExerciseDetail('Seated Hamstring Stretch')">
+        <img src="images/seated-hamstring-stretch.jpg"
+             alt="Seated Hamstring Stretch"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🦵
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Hamstring Stretch</h3>
+          <p class="meta mb-4">Seated • Legs • Flexibility</p>
+          <button onclick="event.stopPropagation(); logWorkout('Seated Hamstring Stretch')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      <!-- Figure 4 Stretch -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Figure 4 Stretch')">
+        <img src="images/figure-4-stretch.jpg"
+             alt="Figure 4 Stretch"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          4️⃣
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Figure 4 Stretch</h3>
+          <p class="meta mb-4">Seated • Hip Opener</p>
+          <button onclick="event.stopPropagation(); logWorkout('Figure 4 Stretch')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      <!-- Hip Extension -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Standing Hip Extension')">
+        <img src="images/standing-hip-extension.png"
+             alt="Standing Hip Extension"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🦵
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Hip Extension</h3>
+          <p class="meta mb-4">Standing • Hips & Glutes</p>
+          <button onclick="event.stopPropagation(); logWorkout('Standing Hip Extension')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      </div>
+    </section>
+
+    <!-- Section 4: Upper Body & Strength -->
+    <section class="mb-12">
+      <h2 class="section-heading">Upper Body & Strength</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+
+      <!-- Arm Raises -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Seated Arm Raises')">
+        <img src="images/seated-arm-raises.jpg"
+             alt="Seated Arm Raises"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🙌
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Arm Raises</h3>
+          <p class="meta mb-4">Seated • Shoulders • Strength</p>
+          <button onclick="event.stopPropagation(); logWorkout('Seated Arm Raises')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      <!-- Sit to Stands -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Sit to Stands')">
+        <img src="images/sit-to-stands.jpg"
+             alt="Sit to Stands"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          💪
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Sit to Stands</h3>
+          <p class="meta mb-4">Seated • Legs • Strength</p>
+          <button onclick="event.stopPropagation(); logWorkout('Sit to Stands')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      <!-- Standing Side Bend -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Standing Side Bend')">
+        <img src="images/standing-side-bend.png"
+             alt="Standing Side Bend"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🤸
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Standing Side Bend</h3>
+          <p class="meta mb-4">Standing • Core & Spine</p>
+          <button onclick="event.stopPropagation(); logWorkout('Standing Side Bend')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      </div>
+    </section>
+
+    <!-- Section 5: Standing & Balance -->
+    <section class="mb-12">
+      <h2 class="section-heading">Standing & Balance</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+
+      <!-- Calf Raises -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Standing Calf Raises')">
+        <img src="images/standing-calf-raises.jpg"
+             alt="Standing Calf Raises"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🦿
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Calf Raises</h3>
+          <p class="meta mb-4">Standing • Legs • Strength</p>
+          <button onclick="event.stopPropagation(); logWorkout('Standing Calf Raises')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      <!-- Warrior I -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Warrior I Hip Flexor Stretch')">
+        <img src="images/warrior-1-hip-flexor.jpg"
+             alt="Warrior I Hip Flexor Stretch"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🧘
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Warrior I</h3>
+          <p class="meta mb-4">Standing • Hip Flexors • Balance</p>
+          <button onclick="event.stopPropagation(); logWorkout('Warrior I Hip Flexor Stretch')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      <!-- Calf Stretch -->
+      <article class="exercise-card cursor-pointer"
+               onclick="openExerciseDetail('Standing Calf Stretch')">
+        <img src="images/standing-calf-stretch.png"
+             alt="Standing Calf Stretch"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; height: 200px; background: linear-gradient(135deg, #E0F2FE 0%, #DBEAFE 100%);" class="flex items-center justify-center text-6xl">
+          🦿
+        </div>
+        <div class="p-5">
+          <h3 class="mb-2">Calf Stretch</h3>
+          <p class="meta mb-4">Standing • Calves • Flexibility</p>
+          <button onclick="event.stopPropagation(); logWorkout('Standing Calf Stretch')" class="w-full rounded-lg">
+            ▶️Start Exercise
+          </button>
+        </div>
+      </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sticky Bottom Actions -->
+  <div class="bottom-actions">
+    <div class="max-w-7xl mx-auto flex gap-4 justify-center flex-wrap">
+      <a href="progress.html" style="background-color: var(--primary);" class="text-white px-8 py-3 rounded-lg text-lg font-semibold hover:opacity-90 transition flex items-center gap-2">
+        View My Progress
+      </a>
+      <a href="weekly-summary.html" style="background-color: var(--accent);" class="text-white px-8 py-3 rounded-lg text-lg font-semibold hover:opacity-90 transition flex items-center gap-2">
+        Weekly Summary
+      </a>
+    </div>
+  </div>
+
+  <!-- Log Workout Modal -->
+  <div id="logWorkoutModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-6" role="dialog" aria-modal="true" aria-labelledby="logModalTitle">
+    <div class="bg-white rounded-3xl p-10 max-w-2xl w-full shadow-2xl relative">
+      <button onclick="closeLogWorkoutModal()" class="absolute top-4 right-4 text-4xl text-gray-500 hover:text-gray-700" aria-label="Close logging form">×</button>
+      <h2 id="logModalTitle" class="text-4xl font-bold text-gray-900 mb-6">Log Your Workout</h2>
+      <p class="text-2xl text-gray-700 mb-8">How did <span id="logExerciseName" class="font-bold">this exercise</span> feel?</p>
+      
+      <div class="mb-8">
+        <label class="block text-2xl font-bold text-gray-900 mb-4">Difficulty Level</label>
+        <div class="grid grid-cols-3 gap-4">
+          <button type="button" onclick="selectDifficulty('easy')" id="diff-easy" class="difficulty-btn p-4 rounded-xl border-4 border-green-500 bg-green-50 hover:bg-green-100 transition">
+            <div class="text-4xl mb-2">😊</div>
+            <div class="font-bold text-green-700">Easy</div>
+          </button>
+          <button type="button" onclick="selectDifficulty('medium')" id="diff-medium" class="difficulty-btn p-4 rounded-xl border-4 border-gray-300 hover:border-yellow-500 hover:bg-yellow-50 transition">
+            <div class="text-4xl mb-2">😐</div>
+            <div class="font-bold text-gray-700">Medium</div>
+          </button>
+          <button type="button" onclick="selectDifficulty('hard')" id="diff-hard" class="difficulty-btn p-4 rounded-xl border-4 border-gray-300 hover:border-red-500 hover:bg-red-50 transition">
+            <div class="text-4xl mb-2">😰</div>
+            <div class="font-bold text-gray-700">Hard</div>
+          </button>
+        </div>
+        <input type="hidden" id="difficultyLevel" value="easy">
+      </div>
+
+      <div class="mb-8">
+        <label for="painLevel" class="block text-2xl font-bold text-gray-900 mb-4">Pain Level (0 = No Pain, 10 = Severe)</label>
+        <input type="range" id="painLevel" name="painLevel" min="0" max="10" value="0" 
+               class="w-full h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+               oninput="document.getElementById('painValue').textContent = this.value">
+        <div class="text-center mt-4">
+          <span id="painValue" class="text-5xl font-bold text-blue-600">0</span>
+          <span class="text-2xl text-gray-600"> / 10</span>
+        </div>
+      </div>
+      
+      <div class="mb-8">
+        <label for="workoutNotes" class="block text-2xl font-bold text-gray-900 mb-4">Notes (Optional)</label>
+        <textarea id="workoutNotes" rows="4" 
+                  class="w-full p-4 text-2xl border-4 border-gray-300 rounded-xl focus:border-blue-500"
+                  placeholder="How did it feel? Any observations?"></textarea>
+      </div>
+      
+      <button onclick="saveWorkoutLog()" class="w-full bg-blue-600 text-white btn-primary hover:bg-blue-700 transition-all shadow-xl text-2xl">
+        💾 Save Workout Log
+      </button>
+    </div>
+  </div>
+
+  <!-- Exercise Detail Modal -->
+  <div id="exerciseDetailModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-6" role="dialog" aria-modal="true">
+    <div class="bg-white rounded-3xl p-10 max-w-4xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeExerciseDetail()" class="absolute top-4 right-4 text-4xl text-gray-500 hover:text-gray-700" aria-label="Close exercise details">×</button>
+      <div id="exerciseDetailContent"></div>
+      <div class="flex gap-4 mt-8">
+        <button onclick="logWorkoutFromDetail()" class="flex-1 bg-blue-600 text-white py-4 px-6 rounded-xl font-bold text-xl hover:bg-blue-700 transition">
+          ✅ Log This Workout
+        </button>
+        <button onclick="closeExerciseDetail()" class="flex-1 bg-gray-200 text-gray-700 py-4 px-6 rounded-xl font-bold text-xl hover:bg-gray-300 transition">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white mt-16 pb-32 md:pb-24">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <img src="/images/icon-192.png" alt="PorchFitness Logo" class="w-16 h-16 rounded-lg">
+          <div>
+            <h3 class="text-2xl font-bold">PorchFitness</h3>
+            <p class="text-base text-blue-200">LavaRock Labs</p>
+          </div>
+        </div>
+        <div class="text-center md:text-right">
+          <p class="text-lg text-blue-200">
+            <a href="mailto:aloha@lavarocklabs.com" class="hover:underline">aloha@lavarocklabs.com</a> | 
+            <a href="https://lavarocklabs.com" target="_blank" class="hover:underline">lavarocklabs.com</a>
+          </p>
+          <p class="text-base text-blue-300 mt-1">© 2025 PorchFitness • All Rights Reserved</p>
+          <p class="text-sm text-blue-300 mt-2">
+            <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ElevenLabs Conversational AI Widget - Samantha -->
+  <elevenlabs-convai agent-id="agent_1501kd4t27ftf2br1c7p1tm53kjg"></elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+  <script>
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(window.firebaseConfig || {
+        apiKey: "AIzaSyC9zzKfkpYgo2Kwsxt1acyjsgtBYCI_WBs",
+        authDomain: "porchfitness-98628.firebaseapp.com",
+        projectId: "porchfitness-98628",
+        storageBucket: "porchfitness-98628.firebasestorage.app",
+        messagingSenderId: "115728465210",
+        appId: "1:115728465210:web:2fb384f71a8c626faea403"
+      });
+    }
+
+    let currentUser = null;
+    let currentExerciseName = '';
+
+    // Auth button handler
+    const googleSignInBtn = document.getElementById('googleSignInBtn');
+    
+    firebase.auth().onAuthStateChanged(async (user) => {
+      currentUser = user;
+      const userGreeting = document.getElementById('userGreeting');
+      const signInText = document.getElementById('signInText');
+      
+      if (user && !user.isAnonymous) {
+        // User is signed in with Google
+        const firstName = user.displayName ? user.displayName.split(' ')[0] : 'there';
+        userGreeting.textContent = `Hi ${firstName}`;
+        signInText.textContent = 'Sign Out';
+        googleSignInBtn.onclick = async () => {
+          if (confirm('Sign out?')) {
+            await firebase.auth().signOut();
+            window.location.reload();
+          }
+        };
+        
+        // Pass userId to ElevenLabs widget for webhook calls
+        passUserIdToElevenLabs(user.uid);
+      } else {
+        // Show Google Sign-In button for anonymous or no user
+        userGreeting.textContent = 'Hi there';
+        signInText.textContent = 'Sign In';
+        googleSignInBtn.onclick = async () => {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          try {
+            await firebase.auth().signInWithPopup(provider);
+          } catch (error) {
+            console.error('Google Sign-In error:', error);
+            alert('Unable to sign in with Google at this time. Error: ' + (error.code || error.message) + '\n\nPlease try again or contact support at aloha@lavarocklabs.com');
+          }
+        };
+      }
+    });
+
+    // Pass userId to ElevenLabs Conversational AI
+    function passUserIdToElevenLabs(userId) {
+      const convaiWidget = document.querySelector('elevenlabs-convai');
+      if (convaiWidget) {
+        // Set client tools data that will be passed to all webhook calls
+        convaiWidget.setAttribute('client-tools-data', JSON.stringify({ userId }));
+      }
+    }
+
+    // Select difficulty level
+    function selectDifficulty(level) {
+      document.getElementById('difficultyLevel').value = level;
+      
+      // Update button styles
+      document.querySelectorAll('.difficulty-btn').forEach(btn => {
+        btn.classList.remove('border-green-500', 'bg-green-50', 'border-yellow-500', 'bg-yellow-50', 'border-red-500', 'bg-red-50');
+        btn.classList.add('border-gray-300');
+      });
+      
+      const selectedBtn = document.getElementById(`diff-${level}`);
+      selectedBtn.classList.remove('border-gray-300');
+      if (level === 'easy') {
+        selectedBtn.classList.add('border-green-500', 'bg-green-50');
+      } else if (level === 'medium') {
+        selectedBtn.classList.add('border-yellow-500', 'bg-yellow-50');
+      } else {
+        selectedBtn.classList.add('border-red-500', 'bg-red-50');
+      }
+    }
+
+    // Open workout logging modal
+    function logWorkout(exerciseName) {
+      if (!currentUser) {
+        alert('Please sign in with Google to log workouts and track your progress!');
+        return;
+      }
+      
+      currentExerciseName = exerciseName;
+      document.getElementById('logExerciseName').textContent = exerciseName;
+      document.getElementById('painLevel').value = 0;
+      document.getElementById('painValue').textContent = '0';
+      document.getElementById('difficultyLevel').value = 'easy';
+      document.getElementById('workoutNotes').value = '';
+      
+      // Reset difficulty buttons
+      selectDifficulty('easy');
+      
+      document.getElementById('logWorkoutModal').classList.remove('hidden');
+    }
+
+    // Close workout logging modal
+    function closeLogWorkoutModal() {
+      document.getElementById('logWorkoutModal').classList.add('hidden');
+    }
+
+    // Save workout log to Firebase
+    async function saveWorkoutLog() {
+      if (!currentUser || currentUser.isAnonymous) {
+        alert('Please sign in to log workouts!');
+        return;
+      }
+
+      const painLevel = parseInt(document.getElementById('painLevel').value);
+      const difficulty = document.getElementById('difficultyLevel').value;
+      const notes = document.getElementById('workoutNotes').value.trim();
+      
+      // Validate we have all required data
+      if (!currentExerciseName) {
+        alert('❌ Error: No exercise selected. Please try clicking the Log Workout button again.');
+        return;
+      }
+      
+      if (isNaN(painLevel)) {
+        alert('❌ Error: Please select a pain level');
+        return;
+      }
+      
+      // Debug: Log what we're sending
+      console.log('Logging workout:', {
+        userId: currentUser.uid,
+        exerciseName: currentExerciseName,
+        painLevel: painLevel,
+        difficulty: difficulty,
+        notes: notes || '(none)'
+      });
+      
+      try {
+        const payload = {
+          userId: currentUser.uid,
+          exerciseName: currentExerciseName,
+          painLevel: painLevel,
+          difficulty: difficulty
+        };
+        
+        if (notes) {
+          payload.notes = notes;
+        }
+        
+        console.log('Payload being sent:', JSON.stringify(payload));
+        
+        const response = await fetch('https://us-central1-porchfitness-98628.cloudfunctions.net/logWorkout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        console.log('Server response:', result);
+        
+        if (result.success) {
+          alert(`✅ ${result.message || 'Workout logged successfully!'}`);
+          closeLogWorkoutModal();
+        } else {
+          alert(`❌ Failed to log workout: ${result.error}`);
+        }
+      } catch (error) {
+        console.error('Error logging workout:', error);
+        alert('❌ Failed to log workout. Please try again.');
+      }
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('logWorkoutModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'logWorkoutModal') {
+        closeLogWorkoutModal();
+      }
+    });
+
+    // Exercise Detail Modal - Complete data for all 15 exercises
+    const exerciseDetails = {
+      'Seated Hamstring Stretch': {
+        emoji: '🦵',
+        category: 'Seated • Legs • Flexibility',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Sit on chair edge, extend one leg straight, gently reach toward toes. Hold 20-30 seconds each side.',
+        instructions: [
+          'Sit on the edge of your chair with good posture',
+          'Extend one leg straight out in front of you with heel on the floor',
+          'Keep your back straight and lean forward from your hips',
+          'Reach gently toward your toes (don\'t force it)',
+          'Hold for 20-30 seconds, breathing deeply',
+          'Switch sides and repeat'
+        ],
+        image: 'images/seated-hamstring-stretch.jpg'
+      },
+      'Sit to Stands': {
+        emoji: '💪',
+        category: 'Seated • Strength',
+        protocol: '2 sets × 10 reps',
+        description: 'Stand up from chair without using hands. Builds leg strength.',
+        instructions: [
+          'Sit toward the front edge of your chair',
+          'Place feet flat on floor, hip-width apart',
+          'Cross arms over chest or extend forward',
+          'Lean slightly forward and stand up using only leg muscles',
+          'Stand fully upright',
+          'Slowly lower back down to seated position',
+          'Repeat for 10 repetitions'
+        ],
+        image: 'images/sit-to-stands.jpg'
+      },
+      'Seated Cat-Cow': {
+        emoji: '🐱',
+        category: 'Seated • Back',
+        protocol: '2 sets × 10 reps',
+        description: 'Gentle spinal mobility. Arch and round your back slowly.',
+        instructions: [
+          'Sit up straight with feet flat on floor',
+          'Place hands on knees',
+          'Inhale: arch your back, lift chest, look up slightly (Cow)',
+          'Exhale: round your spine, drop head forward, pull belly in (Cat)',
+          'Move slowly between these two positions',
+          'Repeat 10 times, coordinating breath with movement'
+        ],
+        image: 'images/seated-cat-cow.jpg'
+      },
+      'Seated Arm Raises': {
+        emoji: '🙌',
+        category: 'Seated • Shoulders',
+        protocol: '2 sets × 10 reps',
+        description: 'Sit up straight, raise arms to side to shoulder height, lower back down. Repeat 10-15 times.',
+        instructions: [
+          'Sit up straight with good posture',
+          'Start with arms at your sides',
+          'Raise both arms out to the sides to shoulder height',
+          'Keep elbows slightly bent',
+          'Pause briefly at the top',
+          'Lower arms slowly back to starting position',
+          'Repeat for 10-15 repetitions'
+        ],
+        image: 'images/seated-arm-raises.jpg'
+      },
+      'Seated Ankle Circles': {
+        emoji: '🦶',
+        category: 'Seated • Ankles',
+        protocol: '2 sets × 10 circles each direction',
+        description: 'Sit up straight, lift one foot, and draw circles in the air with your toes. Switch directions halfway.',
+        instructions: [
+          'Sit comfortably with good posture',
+          'Lift one foot slightly off the ground',
+          'Draw circles in the air with your toes',
+          'Make 10 circles in one direction',
+          'Switch and make 10 circles in the opposite direction',
+          'Lower that foot and repeat with the other foot'
+        ],
+        image: 'images/seated-ankle-circles.jpg'
+      },
+      'Seated Side Bends': {
+        emoji: '🤸',
+        category: 'Seated • Core',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Sit up straight, reach one arm overhead and lean to the opposite side. Hold onto the chair with the other hand.',
+        instructions: [
+          'Sit up straight in the middle of your chair',
+          'Place one hand on the chair seat for support',
+          'Raise the other arm overhead',
+          'Lean to the side where your hand is on the chair',
+          'Feel the stretch along your side',
+          'Hold for 20 seconds',
+          'Return to center and switch sides'
+        ],
+        image: 'images/seated-side-bends.jpg'
+      },
+      'Seated Spinal Twist': {
+        emoji: '🔄',
+        category: 'Seated • Spine',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Sit up straight, place one hand on the back of the chair, twist your torso and look over your shoulder.',
+        instructions: [
+          'Sit up straight with feet flat on floor',
+          'Place right hand on the back of the chair',
+          'Place left hand on right knee',
+          'Twist your torso to the right',
+          'Look over your right shoulder',
+          'Hold for 20 seconds, breathing deeply',
+          'Return to center and repeat on the other side'
+        ],
+        image: 'images/seated-spinal-twist.jpg'
+      },
+      'Figure 4 Stretch': {
+        emoji: '4️⃣',
+        category: 'Seated • Hip Opener',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Sit on the edge of the chair, cross one ankle over the opposite knee, and gently press down on the raised knee.',
+        instructions: [
+          'Sit toward the front of your chair',
+          'Place right ankle on top of left knee',
+          'Keep right foot flexed (toes pointing up)',
+          'Gently press down on right knee',
+          'Lean slightly forward for a deeper stretch',
+          'Hold for 20-30 seconds',
+          'Switch sides and repeat'
+        ],
+        image: 'images/figure-4-stretch.jpg'
+      },
+      'Seated Shoulder Rolls': {
+        emoji: '🔄',
+        category: 'Seated • Shoulders',
+        protocol: '2 sets × 10 reps each direction',
+        description: 'Sit up straight, roll your shoulders up, back, and down in a circular motion. Repeat 10 times, then reverse.',
+        instructions: [
+          'Sit up straight with arms at sides',
+          'Roll shoulders up toward ears',
+          'Roll them back',
+          'Roll them down',
+          'Complete 10 circles in this direction',
+          'Reverse: roll forward, up, back, down',
+          'Complete 10 circles in reverse direction'
+        ],
+        image: 'images/seated-shoulder-rolls.jpg'
+      },
+      'Seated Neck Stretches': {
+        emoji: '💆',
+        category: 'Seated • Neck',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Sit up straight, slowly tilt your head toward one shoulder, hold, and then switch to the other side.',
+        instructions: [
+          'Sit up straight with shoulders relaxed',
+          'Slowly tilt head toward right shoulder',
+          'Keep shoulders down and relaxed',
+          'Hold for 20 seconds',
+          'Return head to center',
+          'Tilt head toward left shoulder',
+          'Hold for 20 seconds, breathing deeply'
+        ],
+        image: 'images/seated-neck-stretches.jpg'
+      },
+      'Standing Calf Raises': {
+        emoji: '🦿',
+        category: 'Standing • Legs',
+        protocol: '2 sets × 10 reps',
+        description: 'Stand up straight, hold onto the back of the chair, and raise your heels off the ground. Lower back down.',
+        instructions: [
+          'Stand behind chair, holding back for balance',
+          'Feet hip-width apart, toes forward',
+          'Rise up onto your toes',
+          'Lift heels as high as comfortable',
+          'Pause at the top',
+          'Lower heels slowly back to floor',
+          'Repeat for 10 repetitions'
+        ],
+        image: 'images/standing-calf-raises.jpg'
+      },
+      'Warrior I Hip Flexor Stretch': {
+        emoji: '🧘',
+        category: 'Standing • Hip Flexors',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Stand with legs wide, turn one foot out, bend that knee, and stretch the other leg straight. Reach arms overhead.',
+        instructions: [
+          'Stand with feet wide apart',
+          'Turn right foot out 90 degrees',
+          'Keep left foot pointing forward',
+          'Bend right knee over ankle',
+          'Keep left leg straight',
+          'Raise arms overhead',
+          'Hold for 20 seconds, then switch sides'
+        ],
+        image: 'images/warrior-1-hip-flexor.jpg'
+      },
+      'Standing Hip Extension': {
+        emoji: '🦵',
+        category: 'Standing • Hips & Glutes',
+        protocol: '2 sets × 10 reps each leg',
+        description: 'Stand behind chair, hold for balance. Lift one leg straight back, keeping knee straight. Lower and repeat.',
+        instructions: [
+          'Stand behind chair, holding for balance',
+          'Stand on left leg',
+          'Lift right leg straight back',
+          'Keep knee straight and core engaged',
+          'Don\'t lean forward',
+          'Lower leg slowly',
+          'Complete 10 reps, then switch legs'
+        ],
+        image: 'images/standing-hip-extension.png'
+      },
+      'Standing Side Bend': {
+        emoji: '🤸',
+        category: 'Standing • Core & Spine',
+        protocol: '3 reps × 20 sec hold each side',
+        description: 'Stand with feet hip-width apart, reach one arm overhead and lean to the opposite side. Hold for 15-20 seconds each side.',
+        instructions: [
+          'Stand with feet hip-width apart',
+          'Reach right arm overhead',
+          'Place left hand on hip',
+          'Lean to the left side',
+          'Feel stretch along right side',
+          'Hold for 20 seconds',
+          'Return to center and switch sides'
+        ],
+        image: 'images/standing-side-bend.png'
+      },
+      'Standing Calf Stretch': {
+        emoji: '🦿',
+        category: 'Standing • Calves',
+        protocol: '3 reps × 20 sec hold each leg',
+        description: 'Stand facing wall, step one foot back, keep heel down and knee straight. Lean forward to feel stretch in back calf.',
+        instructions: [
+          'Stand facing wall, hands on wall for support',
+          'Step right foot back about 2 feet',
+          'Keep right heel on ground',
+          'Keep right knee straight',
+          'Bend left knee slightly',
+          'Lean forward into the wall',
+          'Feel stretch in right calf, hold 20 seconds',
+          'Switch legs and repeat'
+        ],
+        image: 'images/standing-calf-stretch.png'
+      }
+    };
+
+    // Track current exercise being viewed
+    let currentDetailExercise = '';
+
+    // Open exercise detail modal
+    function openExerciseDetail(exerciseName) {
+      const details = exerciseDetails[exerciseName];
+      if (!details) {
+        console.error('Exercise details not found:', exerciseName);
+        return;
+      }
+
+      currentDetailExercise = exerciseName;
+      
+      // Create detailed content
+      const content = `
+        <div class="mb-6">
+          <img src="${details.image}" 
+               alt="${exerciseName}" 
+               class="w-full rounded-xl shadow-lg mb-4"
+               onerror="this.style.display='none';">
+        </div>
+        
+        <div class="text-center mb-6">
+          <h2 class="text-3xl font-bold text-gray-900 mb-2">${exerciseName}</h2>
+          <p class="text-xl text-gray-600 mb-2">${details.category}</p>
+          <p class="text-lg font-semibold text-blue-600">📋 ${details.protocol}</p>
+        </div>
+        
+        <div class="mb-6">
+          <p class="text-lg text-gray-700 leading-relaxed">${details.description}</p>
+        </div>
+        
+        <div class="bg-blue-50 rounded-xl p-6">
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Step-by-Step Instructions:</h3>
+          <ol class="space-y-3">
+            ${details.instructions.map((step, index) => 
+              `<li class="flex gap-3">
+                <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">${index + 1}</span>
+                <span class="text-gray-700 pt-1">${step}</span>
+              </li>`
+            ).join('')}
+          </ol>
+        </div>
+      `;
+      
+      document.getElementById('exerciseDetailContent').innerHTML = content;
+      document.getElementById('exerciseDetailModal').classList.remove('hidden');
+    }
+
+    // Close exercise detail modal
+    function closeExerciseDetail() {
+      document.getElementById('exerciseDetailModal').classList.add('hidden');
+      currentDetailExercise = '';
+    }
+
+    // Log workout from detail view
+    function logWorkoutFromDetail() {
+      if (currentDetailExercise) {
+        const exerciseName = currentDetailExercise; // Save before closing
+        closeExerciseDetail();
+        logWorkout(exerciseName);
+      }
+    }
+
+    // Close detail modal when clicking outside
+    document.getElementById('exerciseDetailModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'exerciseDetailModal') {
+        closeExerciseDetail();
+      }
+    });
+  </script>
+
+</body>
+</html>
